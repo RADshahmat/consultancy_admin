@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './sidebar';
 import Header from './header_admin';
-import "../Styles/admindashboard.css"; // Adjust the path according to your folder structure
+import "../Styles/admindashboard.css"; 
 
 const AdminDashboard = () => {
     return (
