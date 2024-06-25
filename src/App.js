@@ -18,12 +18,22 @@ function ScrollToTop() {
 
 const ProtectedRoute = ({ element }) => {
   const { user, loading } = useAuth();
- console.log(user,loading)
+  console.log(user, loading);
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return user ? element : <Navigate to="/" />;
+};
+
+const RedirectIfAuthenticated = ({ element }) => {
+  const { user, loading } = useAuth();
+  console.log(user, loading);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return user ? <Navigate to="/dashboard" /> : element;
 };
 
 function App() {
@@ -34,7 +44,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<RedirectIfAuthenticated element={<LoginPage />} />} />
           <Route path="/dashboard" element={<ProtectedRoute element={<DashboardApis />} />} />
         </Routes>
       </Router>
