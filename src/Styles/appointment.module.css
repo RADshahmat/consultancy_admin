@@ -1,0 +1,133 @@
+.login {
+    font-family: Arial, sans-serif;
+    background-color: #2a2727;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    max-width: 600px;
+    margin: 30px auto;
+    border: 1px solid #555;
+    box-shadow: 0px 4px 250px 50px #FFBA08;
+    border-radius: 10px;
+    
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .appointmentForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 10px;
+
+  }
+  
+  .login label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .inputGroup {
+    position: relative;
+  }
+  
+  .login input, select {
+    width: 382px;
+    height: 27px;
+    padding-right: 40px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    outline: none;
+  }
+  
+  .login input[readonly],.login select {
+    background-color: #ffffff;
+  }
+  
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  
+  .appointmentType .buttonGroup {
+    display: flex;
+  }
+  
+  .appointmentType .buttonGroup button {
+    flex: 1;
+    padding: 6px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .appointmentType .buttonGroup button:last-child {
+    margin-right: 0;
+  }
+  
+  .appointmentType .buttonGroup .online {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .appointmentType .buttonGroup .inPerson {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .paymentButton {
+    margin-top: 5px;
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .arrowIcon {
+    margin-left: 10px;
+  }
+  
+  .paymentOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .paymentOptions img {
+    margin-right: 10px;
+  }
+  
+  .paymentOptions span {
+    font-size: 12px;
+    color: #ccc;
+  }
+  
+  @media (max-width: 768px) {
+.login{
+  margin-bottom: 0;
+}
+  }

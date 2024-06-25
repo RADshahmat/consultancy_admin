@@ -1,22 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FaTachometerAlt, FaCalendarCheck, FaBullhorn, FaMoneyBillWave, FaUserShield, FaBox } from 'react-icons/fa';
-import "../Styles/admindashboard.css"; // Adjust the path according to your folder structure
+import "../Styles/sidebar.css"; 
 
 const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="menu">
-                <p className="menu-item"><FaTachometerAlt /> Dashboard</p>
-                <p className="menu-item"><FaCalendarCheck /> Appointment</p>
-                <p className="menu-item"><FaBullhorn /> Promotion</p>
-                <p className="menu-item"><FaMoneyBillWave /> Payment</p>
-                <p className="menu-item"><FaUserShield /> Permissions</p>
-                <p className="menu-item"><FaBox /> Packages</p>
+                <Link to="/" className="menu-item">
+                    <FaTachometerAlt className="menu-icon" /> 
+                    <span>Dashboard</span>
+                </Link>
+                <Link to="/appointment" className="menu-item">
+                    <FaCalendarCheck className="menu-icon" /> 
+                    <span>Appointment</span>
+                </Link>
+                <Link to="/promotion" className="menu-item">
+                    <FaBullhorn className="menu-icon" /> 
+                    <span>Promotion</span>
+                </Link>
+                <Link to="/payment" className="menu-item">
+                    <FaMoneyBillWave className="menu-icon" /> 
+                    <span>Payment</span>
+                </Link>
+                <Link to="/permission" className="menu-item">
+                    <FaUserShield className="menu-icon" /> 
+                    <span>Permissions</span>
+                </Link>
+                <Link to="/package" className="menu-item">
+                    <FaBox className="menu-icon" /> 
+                    <span>Packages</span>
+                </Link>
             </div>
-            <div className="footer">
+            <div className="sidebar_footer">
                 <button className="change-password-button">Change Password</button>
             </div>
-
         </div>
     );
 };

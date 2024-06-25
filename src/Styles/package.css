@@ -1,0 +1,53 @@
+.package-form-container {
+    background-color: #333;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 250px 50px #35A102;
+    max-width: 750px;
+    margin: 30px auto;
+    border: 1px solid #555;
+    text-align: left;
+
+}
+
+.package-form-group {
+    align-items: center;
+}
+
+.package-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.package-form-group input,
+.package-form-group textarea {
+    width: 442px;
+    height: 18px;
+    margin: 5px;
+    border-radius: 4px;
+}
+
+.package-form-group textarea {
+    border-radius: 10px;
+    margin-top: 30px;
+    width: 100%;
+    height: 300px;
+    resize: none;
+}
+
+.add-button{
+    background-color: #d4af37;
+    color: #101010;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;  
+    align-items: center;
+    font-weight: 700;
+    margin: 10px;
+}

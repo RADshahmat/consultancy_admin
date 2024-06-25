@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
-
-body {
+*{
     font-family: 'Nunito', sans-serif;
+}
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,7 +11,7 @@ body {
 .dashboard-container {
     display: flex;
     height: 100vh;
-    background: radial-gradient(circle at top right, #e8e0bc, #ebe5a8e4, #ebebe2);
+    background: #FFFCF5;
 }
 
 .sidebar {
@@ -85,8 +86,8 @@ body {
 
 .main-content {
     flex-grow: 1;
-    margin-top: 80px;
-    margin-left: 250px;
+    margin-top: 71px;
+    margin-left: 231px;
     padding: 20px;
     overflow-y: auto;
 }
@@ -95,6 +96,8 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    box-shadow: 0px 4px 250px 50px #FFBA08;
+
 }
 
 .schedule th, .schedule td {

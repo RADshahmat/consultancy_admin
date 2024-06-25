@@ -1,14 +1,8 @@
 import React from 'react';
-import Sidebar from './sidebar';
-import Header from './header_admin';
-import "../Styles/admindashboard.css"; 
 
-const AdminDashboard = () => {
+const Dashboard = () => {
     return (
-        <div className="dashboard-container">
-            <Header />
-            <Sidebar />
-            <div className="main-content">
+        <div>
                 <table className="schedule">
                     <thead>
                         <tr>
@@ -133,9 +127,8 @@ const AdminDashboard = () => {
                         <p>In Person Meeting</p>
                     </div>
                 </div>
-            </div>
         </div>
     );
 };
 
-export default AdminDashboard;
+export default Dashboard;
