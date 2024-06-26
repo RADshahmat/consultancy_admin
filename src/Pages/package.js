@@ -7,7 +7,6 @@ const Package = () => {
     const [message, setMessage] = useState('');
 
     const handleSend = () => {
-        // Handle the form submission logic here
         console.log({ sms, sendById, message });
     };
 

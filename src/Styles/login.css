@@ -1,0 +1,30 @@
+.login-container {
+    min-height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+  }
+  
+  .login-form {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 8px;
+    background: #fff;
+  }
+  
+  .login-form h2 {
+    color: #333;
+  }
+  
+  .login-form .form-control {
+    border-radius: 4px;
+  }
+  
+  .login-form .btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+  }
+  
+  .login-form .btn-primary:hover {
+    background-color: #2575fc;
+    border-color: #2575fc;
+  }
+  
