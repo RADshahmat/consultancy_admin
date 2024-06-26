@@ -14,8 +14,8 @@ const Package = () => {
         <div className="package-form-container">
                 <div className="package-form-group">
                     <label>Add Package</label>
-                    <input type="text" value={sms} placeholder='Package name' onChange={(e) => setSms(e.target.value)} />
-                    <input type="text" value={sendById} placeholder='Price' onChange={(e) => setSendById(e.target.value)} />
+                    <input type="text" value={sms} placeholder='Package name' className='package-name' onChange={(e) => setSms(e.target.value)} /> <br />
+                    <input type="text" value={sendById} placeholder='Price' className='package-price' onChange={(e) => setSendById(e.target.value)} />
                     <div>
                         <button onClick={handleSend} className="add-button">Add</button>
                     </div>

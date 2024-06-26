@@ -24,13 +24,18 @@
     color: #ccc;
 }
 
-.payment-form-group input,
+.label-id{
+    margin-left: 35px;
+    
+}
+
+.payment-form-group input, .payment-form-group select,
 .payment-form-group textarea {
-    width: 442px;
-    height: 18px;
+    width: 382px;
+    height: 27px;
     margin: 5px;
-    text-align: end;
     border-radius: 4px;
+    padding: 0px;
 }
 
 .payment-form-group textarea {

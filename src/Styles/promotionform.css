@@ -18,11 +18,11 @@
 
 }
 
-.form-gr input{
+.form-gr input, .form-gr select{
     width: 442px;
-    height: 18px;
+    height: 27px;
     margin: 5px;
-    text-align: end;
+    padding: 0px;
 }
 
 .form-group {
@@ -38,7 +38,7 @@
     color: #ccc;
 }
 
-.form-group input,
+.form-group input, 
 .form-group textarea {
     border: none;
     font-size: 16px;

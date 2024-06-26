@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaCalendarCheck, FaBullhorn, FaMoneyBillWave, FaUserShield, FaBox } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
+import { FaHome , FaCalendarCheck, FaBullhorn, FaMoneyBillWave, FaUserShield, FaBox,FaTachometerAlt } from 'react-icons/fa';
 import "../Styles/sidebar.css"; 
 
 const Sidebar = () => {
+    const location = useLocation();
+
     return (
         <div className="sidebar">
             <div className="menu">
@@ -32,9 +34,9 @@ const Sidebar = () => {
                     <span>Packages</span>
                 </Link>
             </div>
-            <div className="sidebar_footer">
-                <button className="change-password-button">Change Password</button>
-            </div>
+            <Link to="/dashboard/cngpassword" className={`sidebar_footer ${location.pathname === '/cngpassword' ? 'active' : ''}`}>
+                <button className="sidebar-change-password-button">Change Password</button>
+            </Link>
         </div>
     );
 };
