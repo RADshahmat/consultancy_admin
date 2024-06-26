@@ -22,7 +22,6 @@
     display: flex;
     align-items: center;
     background-color: #FFFFFF;
-    height: 51px;
     font-size: 20px;
     font-weight: 400;
     color: #000000;
@@ -40,20 +39,27 @@
     border-radius: 5px;
 }
 
+.menu-item.active {
+    background-color: #947FB3;
+    color: #ecf0f1;
+    border-radius: 5px;
+}
+
 .menu-icon {
     margin-right: 10px;
 }
 
 .sidebar_footer {
+    text-decoration: none; 
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #FFFFFF;
+    background-color: #FFFCF5;
 }
 
-.change-password-button {
-    background-color: #FFFFFF;
+.sidebar-change-password-button {
+    background-color: #FFFCF5;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;

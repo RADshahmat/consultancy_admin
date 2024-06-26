@@ -41,10 +41,10 @@
     position: relative;
   }
   
-  .login input, select {
+  .login input, .login select {
     width: 382px;
     height: 27px;
-    padding-right: 40px;
+    padding-right: 12px;
     border: 1px solid #333;
     border-radius: 5px;
     background-color: #ffffff;
@@ -63,7 +63,11 @@
     transform: translateY(-50%);
     color: #999;
   }
-  
+  .appointmentType .buttonGroup button.selected {
+    background-color: #007bff; /* Example selected button background color */
+    color: #fff; /* Example selected button text color */
+}
+
   .appointmentType .buttonGroup {
     display: flex;
   }
@@ -82,15 +86,7 @@
     margin-right: 0;
   }
   
-  .appointmentType .buttonGroup .online {
-    background-color: #fff;
-    color: #000;
-  }
-  
-  .appointmentType .buttonGroup .inPerson {
-    background-color: #007bff;
-    color: #fff;
-  }
+
   
   .paymentButton {
     margin-top: 5px;

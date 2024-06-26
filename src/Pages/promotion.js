@@ -22,8 +22,13 @@ const PromotionForm = () => {
                 </div>
                 <div className="form-gr">
                     <label>Send By ID:</label>
-                    <input type="text" value={sendById} onChange={(e) => setSendById(e.target.value)} />
-                </div> 
+                    <select value={sendById} onChange={(e) => setSendById(e.target.value)}>
+                        <option value="">Select ID</option>
+                        <option value="id1">ID 1</option>
+                        <option value="id2">ID 2</option>
+                        <option value="id3">ID 3</option>
+                    </select>
+                </div>
 
             <div className="form-group">
                 <label>Bulk User By Date:</label>

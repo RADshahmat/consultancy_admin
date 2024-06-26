@@ -1,0 +1,142 @@
+.permission-form-container {
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 250px 50px #172B85;
+    max-width: 900px;
+    margin: 30px auto;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+.permission-account {
+    margin-bottom: 50px;
+}
+
+.permission-account label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.permission-account input {
+    width: 387px;
+    height: 25px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-button {
+    background: #D89C00;
+    color: #fff;
+    border: none;
+    height: 19px;
+    width: 96px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+    background-color: #218838;
+}
+
+.permissions-type-container {
+    padding: 10px;
+    margin-right: 50px;
+}
+
+.permissions-type-container, .permissions-type-container p {
+    margin-bottom: 20px;
+    margin-top: 5px;
+    color: #000000;
+    font-weight: 700;
+    background: #D9D9D9;
+}
+
+.permissions-category {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.permissions-category p {
+    font-weight: 400;
+    background: #FFFFFF;
+    color: #000000;
+    padding: 3px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.permissions-category p:hover {
+    background-color: #1F72CD;
+}
+
+.permissions-category p.selected {
+    background: #1F72CD;
+    color: #000000;
+}
+
+.update-button {
+    font-weight: 700;
+    background: #FFBA08;
+    color: #000000;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.upd-btn-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.update-button:hover {
+    background-color: #c7bd4c;
+}
+
+.permission-rightdiv {
+    text-align: left;
+    background: #D9D9D9;
+    width: 377px;
+    height: 350px;
+    border-radius: 15px;
+    padding: 10px; /* Added padding for better spacing */
+}
+
+.perm-right {
+    margin-top: 50px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.card {
+    background: #605E5E;
+    margin: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px; /* Adjusted padding for better layout */
+    height: 40px;
+}
+
+.card-name {
+    flex-grow: 1;
+    text-align: start;
+}
+
+.card-icon {
+    margin-left: 10px;
+}
