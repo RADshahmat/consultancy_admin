@@ -9,7 +9,7 @@ const PromotionForm = () => {
     const [message, setMessage] = useState('');
 
     const handleSend = () => {
-        // Handle the form submission logic here
+        
         console.log({ sms, sendById, fromDate, toDate, message });
     };
 
