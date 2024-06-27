@@ -122,20 +122,9 @@
     font-weight: 700;
 }
 
-.p-card {
-    display: flex;
-    background: #605E5E;
-    margin: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px; 
-    height: 40px;
-}
 
 .permission-rightdiv .card-name {
-    color: #23292d;
+    color: #f0f0f0;
     flex-grow: 1;
     text-align: start;
 }
@@ -172,32 +161,26 @@
     align-items: center;
 }
 
-.card {
+.p-card {
     display: flex;
+    background-color: #555;
     align-items: center;
     justify-content: center;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
-    width: 90%; 
+    width: 100%; 
     box-sizing: border-box;
 }
 
-.card:hover {
-    background-color: #f0f0f0;
+.p-card:hover {
+    background-color: #2d2929;
 }
 
-.card-name {
-    margin-left: 10px;
-}
 
-.card-icon {
-    margin-right: 10px;
-}
-
-.selected-admin.card {
-    background-color: teal;
+.selected-admin.p-card {
+    background-color: rgb(180, 17, 17);
     color: white; 
 }
 
