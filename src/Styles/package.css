@@ -23,13 +23,13 @@
 }
 .package-price{
     width: 242px;
-    height: 18px;
+    padding: 2px;
     margin: 5px;
     border-radius: 4px;
 }
 .package-name {
     width: 442px;
-    height: 18px;
+    padding: 2px;
     margin: 5px;
     border-radius: 4px;
 }

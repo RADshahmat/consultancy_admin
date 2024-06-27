@@ -41,7 +41,7 @@ const Permission = () => {
                 </div>
                 <div className='permissions'>
                     <div className='permissions-type-container'>
-                        <p>Permission for Masud</p>
+                        <p>Permission for Rad Shahmat</p>
                         <div className='permissions-category'>
                             {permissionsList.map(permission => (
                                 <p
@@ -62,7 +62,7 @@ const Permission = () => {
             <div className='perm-right'>
                 <p>Users</p>
                 <div className='permission-rightdiv'>
-                    <p className='card'>
+                    <p className='p-card'>
                         <span className='card-name'>Rad Shahmat</span>
                         <FaUser className='card-icon' />
                     </p>

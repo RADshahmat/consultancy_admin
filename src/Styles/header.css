@@ -11,7 +11,38 @@
     box-shadow: 0px 4px 4px 0px #00000040;
 
   }
-  
+  .logout-container {
+    margin-right: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.logout {
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    color: #ffffff;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.logout:hover {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.logout:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
   .logo {
     font-size: 1.5rem;
     font-weight: bold;

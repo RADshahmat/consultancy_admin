@@ -46,7 +46,7 @@ const PromotionForm = () => {
             </div>
             <div className="form-group message-group">
                 <textarea value={message} placeholder='1921/1 Character' onChange={(e) => setMessage(e.target.value)} />
-                <button onClick={handleSend} className="send-button">Send <img src='send.svg' /></button>
+                <button onClick={handleSend} className="send-button">Send <img src={`${process.env.PUBLIC_URL}/send.svg`} /></button>
             </div>
         </div>
     );

@@ -24,25 +24,26 @@
 .permission-account input {
     width: 387px;
     height: 25px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 .create-button {
+    margin-left: 10px;
     background: #D89C00;
     color: #fff;
     border: none;
-    height: 19px;
     width: 96px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px 0px #00000040;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    align-items: center;
 }
 
 .create-button:hover {
-    background-color: #218838;
+    background-color: #8e850b;
 }
 
 .permissions-type-container {
@@ -121,7 +122,8 @@
     font-weight: 700;
 }
 
-.card {
+.p-card {
+    display: flex;
     background: #605E5E;
     margin: 10px;
     border-radius: 5px;
@@ -132,11 +134,12 @@
     height: 40px;
 }
 
-.card-name {
+.permission-rightdiv .card-name {
+    color: #D9D9D9;
     flex-grow: 1;
     text-align: start;
 }
 
-.card-icon {
+.permission-rightdiv .card-icon {
     margin-left: 10px;
 }
