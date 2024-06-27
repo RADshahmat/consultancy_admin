@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUser } from 'react-icons/fa';
 import '../Styles/permission.css';
+import axiosInstance from '../Auth/AxiosInstance';
 
 const Permission = () => {
-    const [sms, setSms] = useState('');
-    const [sendById, setSendById] = useState('');
+    const [admin, setAdmin] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [selectedPermissions, setSelectedPermissions] = useState([]);
+    const [admins, setAdmins] = useState([]);
+    const [selectedAdmin, setSelectedAdmin] = useState(null);
+    const [loading,setLoading]=useState(false);
+
+
+    const permissionsList = ["Dashboard", "Appointment", "Payment", "Package", "Promotion", "Permission"];
+
+    const fetchAdmins = async () => {
+        try {
+            const response = await axiosInstance.get('/getAdmins');
+            setAdmins(response.data);
+        } catch (error) {
+            console.error('Error fetching admins:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAdmins();
+    }, []);
+
+    const handleAdminClick = (admin) => {
+        setSelectedAdmin(admin);
+        const permissions = permissionsList.filter(permission => admin[permission.toLowerCase()]);
+        setSelectedPermissions(permissions);
+    };
 
     const handlePermissionClick = (permission) => {
         setSelectedPermissions(prevSelected =>
@@ -16,16 +42,29 @@ const Permission = () => {
         );
     };
 
-    const handleUpdate = () => {
-        // Handle the update logic here
-        console.log('Selected Permissions:', selectedPermissions);
+    const handleSend = async () => {
+        try {
+            const response = await axiosInstance.post('/addAdmin', {
+                admin,
+                password,
+            });
+            setMessage('Admin created successfully');
+            fetchAdmins(); 
+        } catch (error) {
+            setMessage('Failed to create admin');
+        }
     };
 
-    const permissionsList = ["Dashboard", "Appointment", "Payment", "Package", "Promotion", "Permission"];
-
-    const handleSend = () => {
-        // Handle the form submission logic here
-        console.log({ sms, sendById, message });
+    const handleUpdate = async () => {
+        const admin=selectedAdmin.id;
+        setLoading(true)
+        const response = await axiosInstance.post('/updateAdminPermission', {
+            selectedPermissions,
+            admin
+        });
+        fetchAdmins();
+        setLoading(false)
+        console.log('Selected Permissions:', selectedPermissions,admin);
     };
 
     return (
@@ -33,41 +72,51 @@ const Permission = () => {
             <div className='permission-leftdiv'>
                 <div className="permission-account">
                     <label>Create Account</label>
-                    <input type="text" value={sms} placeholder=' Username' onChange={(e) => setSms(e.target.value)} />
-                    <input type="text" value={sendById} placeholder=' Password' onChange={(e) => setSendById(e.target.value)} />
+                    <input type="text" value={admin} placeholder=' Username' onChange={(e) => setAdmin(e.target.value)} />
+                    <input type="text" value={password} placeholder=' Password' onChange={(e) => setPassword(e.target.value)} />
                     <div>
                         <button onClick={handleSend} className="create-button">Create</button>
                     </div>
                 </div>
-                <div className='permissions'>
-                    <div className='permissions-type-container'>
-                        <p>Permission for Masud</p>
-                        <div className='permissions-category'>
-                            {permissionsList.map(permission => (
-                                <p
-                                    key={permission}
-                                    className={selectedPermissions.includes(permission) ? 'selected' : ''}
-                                    onClick={() => handlePermissionClick(permission)}
-                                >
-                                    {permission}
-                                </p>
-                            ))}
+                {selectedAdmin && (
+                    <div className='permissions'>
+                        <div className='permissions-type-container'>
+                            <p>Permission for {selectedAdmin.username}</p>
+                            <div className='permissions-category'>
+                                {permissionsList.map(permission => (
+                                    <p
+                                        key={permission}
+                                        className={selectedPermissions.includes(permission) ? 'selected' : ''}
+                                        onClick={() => handlePermissionClick(permission)}
+                                    >
+                                        {permission}
+                                    </p>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='upd-btn-container'>
+                            <button onClick={handleUpdate} className="update-button">{loading?'loading...':'Update'}</button>
                         </div>
                     </div>
-                    <div className='upd-btn-container'>
-                        <button onClick={handleUpdate} className="update-button">Update</button>
-                    </div>
-                </div>
+                )}
             </div>
             <div className='perm-right'>
                 <p>Users</p>
                 <div className='permission-rightdiv'>
-                    <p className='card'>
-                        <span className='card-name'>Rad Shahmat</span>
-                        <FaUser className='card-icon' />
-                    </p>
+                    {admins.map(admin => (
+                        <p  
+                            key={admin.id}
+                            className={`card ${selectedAdmin && selectedAdmin.id === admin.id ? 'selected-admin' : ''}`}
+                            onClick={() => handleAdminClick(admin)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <span className='card-name'>{admin.username}</span>
+                            <FaUser className='card-icon' />
+                        </p>
+                    ))}
                 </div>
             </div>
+            {message && <p>{message}</p>}
         </div>
     );
 };

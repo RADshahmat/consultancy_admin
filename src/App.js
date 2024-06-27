@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import React from 'react';
 import './App.css';
 import DashboardApis from './Services/admindashboardApis';
 import LoginPage from './Services/login';
@@ -23,12 +24,12 @@ const ProtectedRoute = ({ element }) => {
     return <div>Loading...</div>;
   }
 
-  return user ? element : <Navigate to="/" />;
+  return user ? React.cloneElement(element, { user }) : <Navigate to="/" />;
 };
 
 const RedirectIfAuthenticated = ({ element }) => {
   const { user, loading } = useAuth();
-  console.log(user, loading);
+  console.log(user);
   if (loading) {
     return <div>Loading...</div>;
   }

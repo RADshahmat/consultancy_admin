@@ -14,7 +14,7 @@ const useAuth = () => {
     } catch (err) {
       setUser(null);
       if (err.response && err.response.status === 403) {
-        navigate('/'); // Redirect to login if token is expired or invalid
+        navigate('/'); 
       }
     } finally {
       setLoading(false);

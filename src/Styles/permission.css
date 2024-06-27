@@ -140,3 +140,8 @@
 .card-icon {
     margin-left: 10px;
 }
+.selected-admin.card {
+    background-color: teal;
+    color: white; 
+}
+

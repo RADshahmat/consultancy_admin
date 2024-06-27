@@ -11,11 +11,11 @@ import Package from '../Pages/package';
 import ChangePassword from '../Pages/cngpassword';
 import "../Styles/admindashboard.css"; 
 
-const DashboardApis = () => {
+const DashboardApis = ({ user }) => {
     return (
         <div className="dashboard-container">
             <Header />
-            <Sidebar />
+            <Sidebar user={user} />
             <div className="main-content">
                 <Routes>
                     <Route path="/appointment" element={<Appointment />} />
