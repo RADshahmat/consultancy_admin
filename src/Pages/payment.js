@@ -18,8 +18,8 @@ const Payment = () => {
                     <label>Search By Name :</label>
                     <input type="text" value={sms} onChange={(e) => setSms(e.target.value)} />
                 </div>
-                <div className="payment-form-group label-id">
-                    <label>Search By ID:</label>
+                <div className="payment-form-group">
+                    <label className='label-id'>Search By ID :</label>
                     <select value={sendById} onChange={(e) => setSendById(e.target.value)}>
                         <option value="">Select ID</option>
                         <option value="id1">ID 1</option>

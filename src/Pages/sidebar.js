@@ -52,7 +52,7 @@ const Sidebar = ({ user }) => {
                     </Link>
                 }
             </div>
-            <Link to="/dashboard/cngpassword" className={`sidebar_footer ${location.pathname === '/cngpassword' ? 'active' : ''}`}>
+            <Link to="/dashboard/cngpassword" className={`sidebar_footer ${pathname === '/dashboard/cngpassword' ? 'active' : ''}`}>
                 <button className="sidebar-change-password-button">Change Password</button>
             </Link>
         </div>
