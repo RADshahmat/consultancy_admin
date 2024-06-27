@@ -7,9 +7,6 @@ import axiosInstance from '../Auth/AxiosInstance';
 const Sidebar = ({ user }) => {
     const { pathname } = useLocation();
     const location = useLocation();
-    
-
-   
 
     console.log('sidebar user:', user);
 
