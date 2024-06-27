@@ -113,7 +113,7 @@
     width: 377px;
     height: 350px;
     border-radius: 15px;
-    padding: 10px; /* Added padding for better spacing */
+    padding: 10px; 
 }
 
 .perm-right {
@@ -130,12 +130,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px; /* Adjusted padding for better layout */
+    padding: 0 10px; 
     height: 40px;
 }
 
 .permission-rightdiv .card-name {
-    color: #D9D9D9;
+    color: #23292d;
     flex-grow: 1;
     text-align: start;
 }
@@ -143,6 +143,59 @@
 .permission-rightdiv .card-icon {
     margin-left: 10px;
 }
+
+.permission-rightdiv {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    scrollbar-width: thin; 
+    scrollbar-color: teal #f0f0f0; 
+}
+
+
+.permission-rightdiv::-webkit-scrollbar {
+    width: 5px; 
+}
+
+.permission-rightdiv::-webkit-scrollbar-track {
+    background: #f0f0f0; 
+}
+
+.permission-rightdiv::-webkit-scrollbar-thumb {
+    background-color: #bbc3e3; 
+    border-radius: 10px; 
+    border: 2px solid #f0f0f0; 
+}
+
+.admin-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 90%; 
+    box-sizing: border-box;
+}
+
+.card:hover {
+    background-color: #f0f0f0;
+}
+
+.card-name {
+    margin-left: 10px;
+}
+
+.card-icon {
+    margin-right: 10px;
+}
+
 .selected-admin.card {
     background-color: teal;
     color: white; 

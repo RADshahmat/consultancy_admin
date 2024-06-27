@@ -5,6 +5,7 @@ import "../Styles/sidebar.css";
 import axiosInstance from '../Auth/AxiosInstance';
 
 const Sidebar = ({ user }) => {
+    const { pathname } = useLocation();
     const location = useLocation();
     
 
