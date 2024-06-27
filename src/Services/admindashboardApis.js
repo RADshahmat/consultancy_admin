@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Sidebar from '../Pages/sidebar';
 import Header from '../Pages/header_admin';
 import Dashboard from '../Pages/dashboard';
@@ -18,13 +18,14 @@ const DashboardApis = ({ user }) => {
             <Sidebar user={user} />
             <div className="main-content">
                 <Routes>
-                    <Route path="/appointment" element={<Appointment />} />
-                    <Route path="/promotion" element={<PromotionForm />} />
-                    <Route path="/permission" element={<Permission />} />
-                    <Route path="/payment" element={<Payment />} />
-                    <Route path="/package" element={<Package />} />
-                        <Route path="/cngpassword" element={<ChangePassword />} />
-                    <Route path="/" element={<Dashboard />} />
+                    
+                    <Route path="appointment" element={<Appointment />} />
+                    <Route path="promotion" element={<PromotionForm />} />
+                    <Route path="permission" element={<Permission />} />
+                    <Route path="payment" element={<Payment />} />
+                    <Route path="package" element={<Package />} />
+                    <Route path="cngpassword" element={<ChangePassword />} />
+                    <Route path="*" element={<Dashboard />} />
                 </Routes>
             </div>
         </div>

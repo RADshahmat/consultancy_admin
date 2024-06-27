@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import DashboardApis from './Services/admindashboardApis';
 import LoginPage from './Services/login';
-import { useEffect } from 'react';
 import useAuth from './Auth/Auth';
-import axiosInstance from './Auth/AxiosInstance';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -19,7 +17,6 @@ function ScrollToTop() {
 
 const ProtectedRoute = ({ element }) => {
   const { user, loading } = useAuth();
-  console.log(user, loading);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -29,7 +26,6 @@ const ProtectedRoute = ({ element }) => {
 
 const RedirectIfAuthenticated = ({ element }) => {
   const { user, loading } = useAuth();
-  console.log(user);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -37,16 +33,33 @@ const RedirectIfAuthenticated = ({ element }) => {
   return user ? <Navigate to="/dashboard" /> : element;
 };
 
-function App() {
-  console.log('dhokse');
+const DashboardRedirect = ({ children }) => {
+  const location = useLocation();
 
+  useEffect(() => {
+    if (location.pathname.startsWith('/dashboard') && location.pathname !== '/dashboard') {
+      window.location.href = '/dashboard';
+    }
+  }, []);
+
+  return children;
+};
+
+function App() {
   return (
     <div className="App">
       <Router>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<RedirectIfAuthenticated element={<LoginPage />} />} />
-          <Route path="/dashboard/*" element={<ProtectedRoute element={<DashboardApis />} />} />
+          <Route
+            path="/dashboard/*"
+            element={
+              <DashboardRedirect>
+                <ProtectedRoute element={<DashboardApis />} />
+              </DashboardRedirect>
+            }
+          />
         </Routes>
       </Router>
     </div>
