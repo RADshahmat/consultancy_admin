@@ -1,35 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styles/payment.css';
+import axiosInstance from '../Auth/AxiosInstance'; 
 
 const Payment = () => {
-    const [sms, setSms] = useState('');
-    const [sendById, setSendById] = useState('');
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const [message, setMessage] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [paymentResults, setPaymentResults] = useState([]);
 
-    const handleSend = () => {
-        console.log({ sms, sendById, fromDate, toDate, message });
+    useEffect(() => {
+        const fetchInitialPayments = async () => {
+            try {
+                const response = await axiosInstance.get('/payments');
+                if (response.data && response.data.length > 0) {
+                    setPaymentResults(response.data);
+                } else {
+                    setPaymentResults([]);
+                }
+            } catch (error) {
+                console.error('Error fetching payment details:', error);
+                setPaymentResults([]);
+            }
+        };
+
+        fetchInitialPayments();
+    }, []);
+
+    const handleSearch = async (searchTerm) => {
+        try {
+            const response = await axiosInstance.get(`/payments?search=${searchTerm || ''}`);
+            if (response.data && response.data.length > 0) {
+                setPaymentResults(response.data);
+            } else {
+                setPaymentResults([]);
+            }
+        } catch (error) {
+            console.error('Error fetching payment details:', error);
+            setPaymentResults([]);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        setSearchTerm(value);
+        handleSearch(value);
     };
 
     return (
         <div className="payment-form-container">
-                <div className="payment-form-group label-name">
-                    <label>Search By Name :</label>
-                    <input type="text" value={sms} onChange={(e) => setSms(e.target.value)} />
-                </div>
-                <div className="payment-form-group">
-                    <label className='label-id'>Search By ID :</label>
-                    <select value={sendById} onChange={(e) => setSendById(e.target.value)}>
-                        <option value="">Select ID</option>
-                        <option value="id1">ID 1</option>
-                        <option value="id2">ID 2</option>
-                        <option value="id3">ID 3</option>
-                    </select>
-                </div>
-
-            <div className="payment-form-group">
-                <textarea value={message} onChange={(e) => setMessage(e.target.value)} />
+            <div className="payment-form-group label-name">
+                <label>Search By Name/Phone Number:</label>
+                <input type="text" value={searchTerm} onChange={handleChange} />
+            </div>
+            <div className="payment-result-container">
+                {paymentResults.length > 0 ? (
+                    paymentResults.map((payment, index) => (
+                        <div key={index} className="payment-card">
+                            <div>
+                                {payment.user_fullname} - Phone: {payment.user_phonenum} - Received {payment.amount} Taka for {payment.package_name}
+                            </div>
+                            <div className="payment-date-time">
+                                {payment.payment_date} at {payment.payment_time}
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="no-results">No payment details found.</div>
+                )}
             </div>
         </div>
     );

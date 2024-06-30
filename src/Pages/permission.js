@@ -131,13 +131,12 @@ const Permission = () => {
             {admins.map((admin) => (
               <p
                 key={admin.id}
-                className={`card ${
-                  selectedAdmin && selectedAdmin.id === admin.id
+                className={`p-card ${selectedAdmin && selectedAdmin.id === admin.id
                     ? "selected-admin"
                     : ""
-                }`}
+                  }`}
                 onClick={() => handleAdminClick(admin)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer"}}
               >
                 <span className="card-name">{admin.username}</span>
                 <FaUser className="card-icon" />

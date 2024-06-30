@@ -8,7 +8,6 @@
     margin: 30px auto;
     border: 1px solid #555;
     text-align: left;
-
 }
 
 .package-form-group {
@@ -21,28 +20,22 @@
     font-size: 18px;
     color: #ccc;
 }
-.package-price{
+
+.package-price {
     width: 242px;
     padding: 2px;
-    margin: 5px;
+    margin-bottom: 5px ;
     border-radius: 4px;
 }
+
 .package-name {
     width: 442px;
     padding: 2px;
-    margin: 5px;
+    margin-bottom: 5px;
     border-radius: 4px;
 }
 
-.package-form-group textarea {
-    border-radius: 10px;
-    margin-top: 30px;
-    width: 100%;
-    height: 270px;
-    resize: none;
-}
-
-.add-button{
+.add-button {
     background-color: #d4af37;
     color: #101010;
     border: none;
@@ -50,8 +43,49 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;  
+    transition: background-color 0.3s ease;
     align-items: center;
     font-weight: 700;
-    margin: 10px;
+    margin-top: 10px;
+}
+
+.package-display {
+    overflow-y: auto;
+    background-color: #fff;
+    height: 300px;
+    color: #000;
+    border-radius: 10px;
+    margin: 20px 10px 10px 0px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin; 
+    scrollbar-color: teal #f0f0f0; 
+}
+
+.package-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.remove-button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #ff0000;
+}
+.message{
+    margin-top: 5px;
 }
