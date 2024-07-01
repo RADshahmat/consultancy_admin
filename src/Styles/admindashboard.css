@@ -33,9 +33,10 @@ body {
 
 .schedule th, .schedule td {
     border: 1px solid #000000;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
 }
+
 
 .schedule th {
     background-color: #D9D9D9;
@@ -51,13 +52,24 @@ body {
 
 .schedule .reserved {
     background-color: #d0e1ff;
+    cursor: pointer; /* Adding pointer cursor for reserved cells */
+    transition: background-color 0.3s ease;
+}
+
+.schedule .reserved:hover {
+    background-color: #a8c5ff; /* Lighter shade on hover */
+}
+
+.schedule .reserved:focus,
+.schedule .reserved:active {
+    outline: 2px solid #007bff; /* Blue outline when cell is clicked or focused */
 }
 
 .navigation-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 5px;
-    padding: 0 20px; 
+    padding: 0 20px;
 }
 
 .nav2-button {
@@ -75,24 +87,25 @@ body {
 
 .nav2-btn-icon {
     color: #FE0505;
-    margin-right: 8px; 
-    margin-left: 8px; 
+    margin-right: 8px;
+    margin-left: 8px;
 }
-
-
 
 .reservation-details {
     display: flex;
-    gap: 20px;
+    gap: 60px;
     text-align: left;
+    justify-content: center;
 }
 
 .reservation-card {
     background: linear-gradient(259.28deg, #FFBA08 58.97%, #FFBA08 97.95%);
-    width: 60%;
-    padding: 20px;
+    width: 50%;
+    padding: 20px 40px ;
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    
 }
 
 .reservation-card p {
@@ -100,21 +113,31 @@ body {
 }
 
 .reservation-card button {
-    background-color: #333;
-    color: white;
+    background: linear-gradient(259.28deg, #FFBA08 58.97%, #FFBA08 97.95%);
+    color: rgb(23, 22, 22);
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 5px;
+    font-style: italic;
 }
-
+.reservation-card div{
+    display: flex;
+    justify-content: space-between;
+}
+.reservation-card img{
+    height: 40px;
+    width: 40px;
+}
 .reserv-result {
     width: 30%;
     background: #D9D9D9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position:static;
+    right: 10px;
+    font-weight: 400;
 }
 
 .reserv-result p {
