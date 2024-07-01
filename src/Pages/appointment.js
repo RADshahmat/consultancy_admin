@@ -4,7 +4,7 @@ import axiosInstance from '../Auth/AxiosInstance';
 import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaPhone } from 'react-icons/fa';
 
 const Appointment = () => {
-    const [appointmentType, setAppointmentType] = useState('online'); 
+    const [appointmentType, setAppointmentType] = useState('Online'); 
     const [packages, setPackages] = useState([]);
     const [selectedPackage, setSelectedPackage] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
@@ -171,15 +171,15 @@ const Appointment = () => {
                     <div className={styles.buttonGroup}>
                         <button
                             type="button"
-                            className={`${styles.online} ${appointmentType === 'online' ? styles.selected : ''}`}
-                            onClick={() => handleTypeChange('online')}
+                            className={`${styles.online} ${appointmentType === 'Online' ? styles.selected : ''}`}
+                            onClick={() => handleTypeChange('Online')}
                         >
                             Online
                         </button>
                         <button
                             type="button"
-                            className={`${styles.inPerson} ${appointmentType === 'inPerson' ? styles.selected : ''}`}
-                            onClick={() => handleTypeChange('inPerson')}
+                            className={`${styles.inPerson} ${appointmentType === 'In Person' ? styles.selected : ''}`}
+                            onClick={() => handleTypeChange('In Person')}
                         >
                             In Person
                         </button>
