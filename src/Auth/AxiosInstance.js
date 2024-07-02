@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://backend.hurairaconsultancy.com/',
+  baseURL: 'http://localhost:3003/',
+  //baseURL: 'https://backend.hurairaconsultancy.com/',
   withCredentials: true, 
 });
 

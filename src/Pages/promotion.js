@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom';
 import '../Styles/promotionform.css';
 
 const PromotionForm = () => {
@@ -8,20 +8,21 @@ const PromotionForm = () => {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const [message, setMessage] = useState('');
-    
+
     const location = useLocation();
     const params = new URLSearchParams(location.search);
-    const phone = params.get('phone');
+    const phoneParam = params.get('phone');
+    const phone = phoneParam ? `+${phoneParam.replace(' ', '')}` : '';
     const fullname = params.get('fullname');
 
     useEffect(() => {
-        // Optionally, you can set the fullname state if needed
-        // setFullname(fullname);
-    }, [fullname]);
+        if (phone) {
+            setSms(decodeURIComponent(phone));
+        }
+    }, [phone]);
 
     const handleSend = () => {
         console.log({ sms, sendById, fromDate, toDate, message });
- 
     };
 
     return (
@@ -54,7 +55,7 @@ const PromotionForm = () => {
             </div>
             <div className="form-group message-group">
                 <textarea value={message} placeholder='1921/1 Character' onChange={(e) => setMessage(e.target.value)} />
-                <button onClick={handleSend} className="send-button">Send <img src={`${process.env.PUBLIC_URL}/send.svg`} /></button>
+                <button onClick={handleSend} className="send-button">Send <img src={`${process.env.PUBLIC_URL}/send.svg`} alt="Send" /></button>
             </div>
         </div>
     );

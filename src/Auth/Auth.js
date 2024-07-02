@@ -27,7 +27,8 @@ const useAuth = () => {
 
   const login = async (username, password) => {
     try {
-      await axiosInstance.post('/login', { username, password });
+      const resp=await axiosInstance.post('/login', { username, password });
+      console.log(resp)
       await checkAuth();
     } catch (err) {
       throw new Error('Invalid credentials');

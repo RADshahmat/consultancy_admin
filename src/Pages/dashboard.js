@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axiosInstance from '../Auth/AxiosInstance';
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
-import '../Styles/admindashboard.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axiosInstance from "../Auth/AxiosInstance";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import EditReservationModal from './EditReservationModal'; // Import the modal component
+import "../Styles/admindashboard.css";
 
 const Dashboard = () => {
     const [timeSlots, setTimeSlots] = useState([]);
@@ -12,21 +13,33 @@ const Dashboard = () => {
     const [selectedCell, setSelectedCell] = useState(null);
     const [todayAppointments, setTodayAppointments] = useState([]);
     const [monthlyStats, setMonthlyStats] = useState({});
+    const [blockedCells, setBlockedCells] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Add state for modal
 
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get('/timeslotsdashboard');
+            const response = await axiosInstance.get("/timeslotsdashboard");
             setTimeSlots(response.data);
             calculateWeekDates(weekOffset);
             fetchTodayAppointments();
             fetchMonthlyStats();
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const fetchBlockedCells = async () => {
+        try {
+            const response = await axiosInstance.get("/blockedCells");
+            setBlockedCells(response.data);
+        } catch (error) {
+            console.error("Error fetching blocked cells:", error);
         }
     };
 
     useEffect(() => {
         fetchData();
+        fetchBlockedCells();
     }, [weekOffset]);
 
     const calculateWeekDates = (offsetWeeks = 0) => {
@@ -55,44 +68,105 @@ const Dashboard = () => {
         setSelectedCell(null);
     };
 
-    const handleAppointmentClick = (appointment, rowIndex, colIndex) => {
+    const formatDate = (date) => {
+        const d = new Date(date);
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        const year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    };
+
+    const handleAppointmentClick = async (appointment, rowIndex, colIndex, date, timeSlot) => {
         setSelectedAppointment(appointment);
         setSelectedCell({ rowIndex, colIndex });
+        const formatedDate = formatDate(date);
+        if (!appointment) {
+            try {
+                console.log(formatedDate);
+                await axiosInstance.post("/blockCells", { formatedDate, timeSlot });
+                fetchBlockedCells();
+            } catch (error) {
+                console.error("Error blocking/unblocking cell:", error);
+            }
+        }
     };
 
     const fetchTodayAppointments = async () => {
         try {
-            const response = await axiosInstance.get('/todayappointments');
+            const response = await axiosInstance.get("/todayappointments");
             setTodayAppointments(response.data);
         } catch (error) {
-            console.error('Error fetching today appointments:', error);
+            console.error("Error fetching today appointments:", error);
         }
     };
 
     const fetchMonthlyStats = async () => {
         try {
-            const response = await axiosInstance.get('/monthlystats');
+            const response = await axiosInstance.get("/monthlystats");
             setMonthlyStats(response.data);
         } catch (error) {
-            console.error('Error fetching monthly statistics:', error);
+            console.error("Error fetching monthly statistics:", error);
         }
     };
 
     const cancelReservation = async (appointmentId) => {
-        const confirmed = window.confirm('Are you sure you want to cancel this reservation?');
+        const confirmed = window.confirm("Are you sure you want to cancel this reservation?");
         if (confirmed) {
             try {
                 const response = await axiosInstance.delete(`/cancelappointment/${appointmentId}`);
                 if (response.status === 200) {
-                    alert('Reservation cancelled successfully');
+                    alert("Reservation cancelled successfully");
                     setSelectedAppointment(null);
-                    fetchData(); // Refresh the data after cancelling the appointment
+                    fetchData();
                 }
             } catch (error) {
-                console.error('Error cancelling reservation:', error);
-                alert('Failed to cancel reservation');
+                console.error("Error cancelling reservation:", error);
+                alert("Failed to cancel reservation");
             }
         }
+    };
+
+    const handleHeaderClick = async (date) => {
+        const formatedDate = formatDate(date);
+        console.log("Clicked Date:", formatedDate);
+        const response = await axiosInstance.post('/blockDay', { formatedDate });
+        fetchBlockedCells();
+    };
+
+    const isBlocked = (date, timeSlot) => {
+        const blockedCell = blockedCells.find(
+            (cell) => new Date(cell.schedule_date).toDateString() === date.toDateString()
+        );
+        if (!blockedCell) return false;
+        const timeSlotMapping = {
+            '9:00 AM - 10:00 AM': blockedCell.time_slot1.trim(),
+            '10:15 AM - 11:15 AM': blockedCell.time_slot2.trim(),
+            '11:30 AM - 12:30 PM': blockedCell.time_slot3.trim(),
+            '12:45 PM - 1:45 PM': blockedCell.time_slot4.trim(),
+            '2:00 PM - 3:00 PM': blockedCell.time_slot5.trim(),
+            '3:15 PM - 4:15 PM': blockedCell.time_slot6.trim(),
+            '4:30 PM - 5:30 PM': blockedCell.time_slot7.trim(),
+            '7:00 PM - 8:00 PM': blockedCell.time_slot8.trim(),
+            '8:15 PM - 9:15 PM': blockedCell.time_slot9.trim()
+        };
+        return timeSlotMapping[timeSlot] === '1';
+    };
+
+    const openEditModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleUpdate = () => {
+        fetchData();
+        //closeEditModal();
     };
 
     return (
@@ -102,10 +176,10 @@ const Dashboard = () => {
                     <tr>
                         <th>Time Slot</th>
                         {weekDates.map((date, index) => (
-                            <th key={index}>
-                                {date.toLocaleDateString('en-US', { weekday: 'long' })}
+                            <th key={index} onClick={() => handleHeaderClick(date)} style={{ cursor: 'pointer' }}>
+                                {date.toLocaleDateString("en-US", { weekday: "long" })}
                                 <br />
-                                {date.toLocaleDateString('en-US', { day: 'numeric', month: 'long' })}
+                                {date.toLocaleDateString("en-US", { day: "numeric", month: "long" })}
                             </th>
                         ))}
                     </tr>
@@ -116,28 +190,34 @@ const Dashboard = () => {
                             <td>{slot.time_slot}</td>
                             {weekDates.map((date, colIndex) => {
                                 const appointment = slot.appointments.find(
-                                    (appt) =>
-                                        new Date(appt.appoint_date).toDateString() === date.toDateString()
+                                    (appt) => new Date(appt.appoint_date).toDateString() === date.toDateString()
                                 );
                                 const isSelected =
-                                    selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
+                                    selectedCell &&
+                                    selectedCell.rowIndex === rowIndex &&
+                                    selectedCell.colIndex === colIndex;
+                                const isCellBlocked = isBlocked(date, slot.time_slot);
                                 return (
                                     <td
                                         key={colIndex}
-                                        className={appointment ? 'reserved' : ''}
-                                        onClick={() => handleAppointmentClick(appointment, rowIndex, colIndex)}
-                                        style={{ backgroundColor: isSelected ? '#4486b9' : '' }}
+                                        className={appointment ? "reserved" : ""}
+                                        style={{
+                                            backgroundColor: isCellBlocked ? "rgb(220, 20, 60)" : "",
+                                            transition: "background-color 0.4s ease"
+                                        }}
+                                        onClick={() =>
+                                            handleAppointmentClick(appointment, rowIndex, colIndex, date, slot.time_slot)
+                                        }
+
                                     >
                                         {appointment ? (
                                             <div className="cell-content">
-                                                {appointment.user_fullname.length > 10 ? (
-                                                    `${appointment.user_fullname.substring(0, 10)}...`
-                                                ) : (
-                                                    appointment.user_fullname
-                                                )}
+                                                {appointment.user_fullname.length > 10
+                                                    ? `${appointment.user_fullname.substring(0, 10)}...`
+                                                    : appointment.user_fullname}
                                             </div>
                                         ) : (
-                                            ''
+                                            ""
                                         )}
                                     </td>
                                 );
@@ -148,10 +228,11 @@ const Dashboard = () => {
             </table>
             <div className="navigation-buttons">
                 <button className="nav2-button" onClick={handlePreviousWeek}>
-                    <FaArrowAltCircleLeft className='nav2-btn-icon' /> Previous Week
+                    <FaArrowAltCircleLeft className="nav2-btn-icon" /> Previous Week
                 </button>
                 <button className="nav2-button" onClick={handleNextWeek}>
-                    Next Week<FaArrowAltCircleRight className='nav2-btn-icon' />
+                    Next Week
+                    <FaArrowAltCircleRight className="nav2-btn-icon" />
                 </button>
             </div>
             <h3>You Have {todayAppointments.length} Reservations Today</h3>
@@ -161,14 +242,25 @@ const Dashboard = () => {
                         <p>Name: {selectedAppointment.user_fullname}</p>
                         <p>Phone: {selectedAppointment.user_phonenum}</p>
                         <p>{selectedAppointment.package_name}</p>
-                        <p style={{ color: 'red' }}>{selectedAppointment.appoint_type} Meeting</p>
+                        <p style={{ color: "red" }}>{selectedAppointment.appoint_type} Meeting</p>
                         <p>Appointment ID: {selectedAppointment.appointment_id}</p>
                         <p>Booking Time: {selectedAppointment.time_slot}</p>
                         <p>Booking Date: {new Date(selectedAppointment.appoint_date).toLocaleDateString()}</p>
                         <div>
-                            <button onClick={() => cancelReservation(selectedAppointment.appointment_id)}>Cancel This Reservation</button>
+                            <button
+                                style={{ fontSize: '.85rem', background: 'black', color: 'white', borderRadius: '5px', padding: '5px 7px' }}
+                                onClick={() => cancelReservation(selectedAppointment.appointment_id)}
+                            >
+                                Cancel Reservation
+                            </button>
+                            <button
+                                style={{ fontSize: '.85rem', background: 'black', color: 'white', borderRadius: '5px', padding: '5px 7px' }}
+                                onClick={openEditModal}
+                            >
+                                Edit Reservation
+                            </button>
                             <Link
-                                to={`/promotion?phone=${selectedAppointment.user_phonenum}&fullname=${encodeURIComponent(selectedAppointment.user_fullname)}`}
+                                to={`/dashboard/promotion?phone=${selectedAppointment.user_phonenum}&fullname=${encodeURIComponent(selectedAppointment.user_fullname)}`}
                             >
                                 <img src={`${process.env.PUBLIC_URL}/sms-tracking.svg`} alt="Send SMS" />
                             </Link>
@@ -182,6 +274,12 @@ const Dashboard = () => {
                     <p>Last Month Reservations: {monthlyStats.lastmonthreservations}</p>
                 </div>
             </div>
+            <EditReservationModal
+                isOpen={isModalOpen}
+                onClose={closeEditModal}
+                appointment={selectedAppointment}
+                onUpdate={handleUpdate}
+            />
         </div>
     );
 };
