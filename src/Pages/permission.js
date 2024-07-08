@@ -74,6 +74,19 @@ const Permission = () => {
     setLoading(false);
     console.log("Selected Permissions:", selectedPermissions, admin);
   };
+  const handleDelete = async () => {
+    if (window.confirm(`Do you really want to delete ${selectedAdmin.username} from admin?`)) {
+      const admin = selectedAdmin.id;
+      setLoading(true);
+      await axiosInstance.post("/deleteAdmin", {
+        admin,
+      });
+      fetchAdmins();
+      setLoading(false);
+      setSelectedAdmin(null);
+      setMessage("Admin deleted successfully");
+    }
+  };
 
   return (
     <div className="permission-form-container">
@@ -120,6 +133,9 @@ const Permission = () => {
               <button onClick={handleUpdate} className="update-button">
                 {loading ? "loading..." : "Update"}
               </button>
+              <button onClick={handleDelete} className="update-button">
+                {loading ? "loading..." : "Delete Admin"}
+              </button>
             </div>
           </div>
         )}
@@ -138,6 +154,7 @@ const Permission = () => {
                 onClick={() => handleAdminClick(admin)}
                 style={{ cursor: "pointer"}}
               >
+              
                 <span className="card-name">{admin.username}</span>
                 <FaUser className="card-icon" />
               </p>
