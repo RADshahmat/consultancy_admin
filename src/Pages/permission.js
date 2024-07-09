@@ -130,12 +130,13 @@ const Permission = () => {
               </div>
             </div>
             <div className="upd-btn-container">
-              <button onClick={handleUpdate} className="update-button">
+              <div><button onClick={handleUpdate} className="update-button">
                 {loading ? "loading..." : "Update"}
-              </button>
-              <button onClick={handleDelete} className="update-button">
+              </button></div>
+              <div><button onClick={handleDelete} className="update-button">
                 {loading ? "loading..." : "Delete Admin"}
-              </button>
+              </button></div>
+              
             </div>
           </div>
         )}
