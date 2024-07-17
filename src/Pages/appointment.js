@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from '../Styles/appointment.module.css';
 import axiosInstance from '../Auth/AxiosInstance';
-import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaPhone, FaCaretDown } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaCaretDown, FaPhone } from 'react-icons/fa';
+import moment from 'moment-timezone';
 
 const Appointment = () => {
     const [appointmentType, setAppointmentType] = useState('Online'); 
@@ -43,7 +46,8 @@ const Appointment = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         if (date) {
-            fetchTimeSlots(date.toISOString().split('T')[0]);
+            const utcDate = moment(date).utc().format('YYYY-MM-DD');
+            fetchTimeSlots(utcDate);
         }
     };
 
@@ -51,24 +55,21 @@ const Appointment = () => {
         setAppointmentType(type);
     };
 
-    const handlePhoneNumberChange = (e) => {
-        let input = e.target.value.replace(/^\+880|-/g, '').replace(/\D/g, ''); // Remove non-numeric characters
-        if (input.length === 11 && input.startsWith('0')) {
-            input = input.slice(1);
-        }
-        setPhoneNumber(input.slice(0, 11));
+    const handlePhoneNumberChange = (value) => {
+        setPhoneNumber(value);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
+            const bdDate = moment(selectedDate).tz('Asia/Dhaka').format('YYYY-MM-DD');
             await axiosInstance.post('/appointment', {
                 package_id: selectedPackage,
                 appoint_type: appointmentType,
-                appoint_date: selectedDate.toISOString().split('T')[0],
+                appoint_date: bdDate,
                 user_fullname: fullName,
-                user_phonenum: '+880' + phoneNumber,
+                user_phonenum: '+' + phoneNumber,
                 slot_id: selectedTimeSlot
             });
             alert('Appointment booked successfully');
@@ -116,13 +117,21 @@ const Appointment = () => {
                 <div className={styles.formGroup}>
                     <label>Your Phone Number</label>
                     <div className={styles.inputGroup}>
-                        <span className={styles.prefix}>+880</span>
-                        <input className='phone_input'
-                            type="tel"
+                        <PhoneInput
+                            country={'bd'}
                             value={phoneNumber}
                             onChange={handlePhoneNumberChange}
-                            maxLength="11"
-                            style={{ paddingLeft: '50px' }}
+                            enableSearch={true}
+                            countryCodeEditable={false}
+                            inputProps={{
+                                name: 'phone',
+                                required: true,
+                                autoFocus: true,
+                                className: styles.phoneInput
+                            }}
+                            containerClass={styles.customPhoneInput}
+                            buttonClass={styles.customPhoneInput}
+                            inputStyle={{ paddingLeft: '48px' }}
                         />
                         <FaPhone className={styles.icon} />
                     </div>
@@ -199,7 +208,7 @@ const Appointment = () => {
                         </button>
                     </div>
                 </div>
-
+                <br />
                 <button type="submit" className={styles.paymentButton} disabled={loading}>
                     {loading ? "Confirming..." : "Confirm Now"} <FaArrowRight className={styles.arrowIcon} />
                 </button>

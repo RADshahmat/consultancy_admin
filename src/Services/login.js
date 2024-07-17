@@ -27,8 +27,10 @@ const LoginPage = () => {
 
   return (
     <div className="login-container d-flex align-items-center justify-content-center">
-      <div className="login-form card p-4 shadow-lg">
-        <h2 className="text-center mb-4">Login</h2>
+      <div className="login-form card p-4">
+
+        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt='Huraira Consultancy'></img>
+
         <form onSubmit={handleLogin}>
           <div className="form-group mb-3">
             <input
@@ -49,7 +51,7 @@ const LoginPage = () => {
               placeholder="Password"
               required
             />
-          </div>
+          </div> <br /> 
           {!isLoading ? (
             <button type="submit" className="btn btn-primary w-100">Login</button>
           ) : (

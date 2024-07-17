@@ -1,7 +1,6 @@
 .login {
     font-family: Arial, sans-serif;
     background-color: #2a2727;
-    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,9 +13,10 @@
     border-radius: 10px;
 }
 
-h3 {
+.login h3 {
     text-align: center;
     margin-bottom: 10px;
+    color: white;
 }
 
 .appointmentForm {
@@ -34,15 +34,18 @@ h3 {
     display: block;
     font-weight: bold;
     text-align: left;
+    color: white;
 }
 
 .inputGroup {
     position: relative;
 }
-.phone_input{
-  padding-left: 50px; 
+
+.phoneInput {
+    padding-left: 48px;
 }
-.login input{
+
+.login input, .phoneInput {
     width: 477px;
     height: 27px;
     padding-right: 12px;
@@ -51,6 +54,9 @@ h3 {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
     outline: none;
+}
+
+.login input {
     padding-left: 10px;
 }
 
@@ -69,81 +75,73 @@ h3 {
     appearance: none; 
 }
 
-.prefix {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #999;
-}
-
 .icon {
     position: absolute;
     top: 50%;
-    right: 16px;
+    right: 10px;
     transform: translateY(-50%);
-    color: #999;
+    pointer-events: none;
 }
 
-.appointmentType .buttonGroup {
-    display: flex;
-}
-
-.appointmentType .buttonGroup button {
-    flex: 1;
-    padding: 6px;
-    border: none;
+.datePicker {
+    width: 477px;
+    height: 27px;
+    padding-right: 12px;
+    padding-left: 10px;
+    border: 1px solid #333;
     border-radius: 5px;
-    margin-right: 10px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    outline: none;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonGroup button {
+    flex: 1;
+    padding: 5px;
+    margin: 0 5px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.appointmentType .buttonGroup button.selected {
+.buttonGroup button.selected {
     background-color: #007bff;
-    color: #fff;
-}
-
-.appointmentType .buttonGroup button:last-child {
-    margin-right: 0;
+        color: #fff;
 }
 
 .paymentButton {
-    margin-top: 5px;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
-    background-color: #000;
-    color: #fff;
     border: none;
     border-radius: 5px;
+    background-color: #040404;
+    color: #fff;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.paymentButton:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+.paymentButton:hover:not(:disabled) {
+    background-color: #555;
 }
 
 .arrowIcon {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
-.paymentOptions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.paymentOptions img {
-    margin-right: 10px;
-}
-
-.paymentOptions span {
-    font-size: 12px;
-    color: #ccc;
-}
-
-@media (max-width: 768px) {
-    .login {
-        margin-bottom: 0;
-    }
+.appointmentType {
+    margin-top: 10px;
 }

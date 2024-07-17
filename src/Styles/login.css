@@ -1,14 +1,22 @@
 .login-container {
     min-height: 100vh;
-    background: #363333;
-  }
-  
+    background: radial-gradient(circle at top right, 
+    #8f5bb3 0%, 
+    #7f5eb4 40%, 
+    #934fa0 90%);
+    align-items: center;
+}
   .login-form {
     max-width: 400px;
     width: 100%;
     border-radius: 8px;
-    background: #fff;
-  }
+    background: rgba(38, 34, 34, 0.8); /* Semi-transparent background */
+    backdrop-filter: blur(30px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Blur effect for Safari */
+    padding: 20px; /* Optional: Add some padding for better appearance */
+    box-shadow: -2px 15px 60px  rgba(125, 10, 117, 0.532); /* Optional: Add a shadow for depth */
+}
+
   
   .login-form h2 {
     color: #333;
