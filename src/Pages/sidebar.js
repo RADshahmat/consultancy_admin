@@ -11,7 +11,7 @@ const Sidebar = ({ user }) => {
     return (
         <div className="sidebar">
             <div className="menu">
-                {user && user.dashboard &&
+                {user &&
                     <Link to="/dashboard" className={`menu-item ${pathname === '/dashboard' ? 'active' : ''}`}>
                         <FaHome className="menu-icon" />
                         <span>Dashboard</span>

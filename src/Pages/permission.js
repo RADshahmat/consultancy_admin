@@ -72,7 +72,9 @@ const Permission = () => {
     });
     fetchAdmins();
     setLoading(false);
-    console.log("Selected Permissions:", selectedPermissions, admin);
+    
+   
+    console.log("Selected Permissions:", selectedPermissions, admin,response);
   };
   const handleDelete = async () => {
     if (window.confirm(`Do you really want to delete ${selectedAdmin.username} from admin?`)) {
