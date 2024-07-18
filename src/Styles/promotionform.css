@@ -98,3 +98,54 @@
     height: 25px;
 
 }
+
+.appointments-list {
+    color: #000;
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: fixed;
+    z-index: 1000;
+    width: 442px;
+    top: 223px;
+    left:43%;
+}
+
+.appointment-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.appointment-item:last-child {
+    border-bottom: none;
+}
+.loading-screen, .send-result {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 5000;
+    width: 500px;
+    height: 180px;
+    text-align: center;
+}
+
+.send-result {
+    text-align: center;
+}
+.notificationContainer{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ height: 100%;
+ width: 100%;
+ background: #0000008f;
+ z-index: 4999;
+}

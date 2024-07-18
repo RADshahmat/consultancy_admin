@@ -28,9 +28,12 @@ const useAuth = () => {
   const login = async (username, password) => {
     try {
       const resp=await axiosInstance.post('/login', { username, password });
-      console.log(resp)
+      console.log('ResponseData:',resp);
+      localStorage.setItem('dashboardPermission', resp.data.permission);
+      localStorage.setItem('dashboardPermission1', resp.data.permission1);
       await checkAuth();
     } catch (err) {
+      console.log(err)
       throw new Error('Invalid credentials');
     }
   };

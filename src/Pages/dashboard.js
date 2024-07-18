@@ -14,8 +14,12 @@ const Dashboard = () => {
     const [todayAppointments, setTodayAppointments] = useState([]);
     const [monthlyStats, setMonthlyStats] = useState({});
     const [blockedCells, setBlockedCells] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Add state for modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPermitted,setIsPermited]=useState(false);
+    const [isPermitted1,setIsPermited1]=useState(false);
 
+    
+ 
     const fetchData = async () => {
         try {
             const response = await axiosInstance.get("/timeslotsdashboard");
@@ -31,13 +35,16 @@ const Dashboard = () => {
     const fetchBlockedCells = async () => {
         try {
             const response = await axiosInstance.get("/blockedCells");
-            setBlockedCells(response.data);
+            console.log(response)
+            setBlockedCells(response);
         } catch (error) {
             console.error("Error fetching blocked cells:", error);
         }
     };
 
     useEffect(() => {
+        setIsPermited(localStorage.getItem('dashboardPermission'))
+        setIsPermited1(localStorage.getItem('dashboardPermission1'))
         fetchData();
         fetchBlockedCells();
     }, [weekOffset]);
@@ -86,8 +93,12 @@ const Dashboard = () => {
         const formatedDate = formatDate(date);
         if (!appointment) {
             try {
-                console.log(formatedDate);
-                await axiosInstance.post("/blockCells", { formatedDate, timeSlot });
+                if(isPermitted=='false'){
+                    return;
+                  }
+                console.log('jay',formatedDate);
+                const res=await axiosInstance.post("/blockCells", { formatedDate, timeSlot });
+                console.log(res)
                 fetchBlockedCells();
             } catch (error) {
                 console.error("Error blocking/unblocking cell:", error);
@@ -114,6 +125,9 @@ const Dashboard = () => {
     };
 
     const cancelReservation = async (appointmentId) => {
+        if(isPermitted=='false'){
+            return;
+          }
         const confirmed = window.confirm("Are you sure you want to cancel this reservation?");
         if (confirmed) {
             try {
@@ -131,6 +145,9 @@ const Dashboard = () => {
     };
 
     const handleHeaderClick = async (date) => {
+        if(isPermitted=='false'){
+          return;
+        }
         const formatedDate = formatDate(date);
         console.log("Clicked Date:", formatedDate);
         const response = await axiosInstance.post('/blockDay', { formatedDate });
@@ -157,10 +174,16 @@ const Dashboard = () => {
     };
 
     const openEditModal = () => {
+        if(isPermitted=='false'){
+            return;
+          }
         setIsModalOpen(true);
     };
 
     const closeEditModal = () => {
+        if(isPermitted=='false'){
+            return;
+          }
         setIsModalOpen(false);
     };
 
@@ -168,7 +191,7 @@ const Dashboard = () => {
         fetchData();
         //closeEditModal();
     };
-
+ console.log(isPermitted)
     return (
         <div>
             <table className="schedule">
@@ -259,11 +282,11 @@ const Dashboard = () => {
                             >
                                 Edit Reservation
                             </button>
-                            <Link
+                            {isPermitted1=='true'?<Link
                                 to={`/dashboard/promotion?phone=${selectedAppointment.user_phonenum}&fullname=${encodeURIComponent(selectedAppointment.user_fullname)}`}
                             >
                                 <img src={`${process.env.PUBLIC_URL}/sms-tracking.svg`} alt="Send SMS" />
-                            </Link>
+                            </Link>:''}
                         </div>
                     </div>
                 )}
