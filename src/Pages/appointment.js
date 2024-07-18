@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import styles from '../Styles/appointment.module.css';
 import axiosInstance from '../Auth/AxiosInstance';
-import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaPhone } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaPhone, FaCaretDown } from 'react-icons/fa';
 
 const Appointment = () => {
     const [appointmentType, setAppointmentType] = useState('Online'); 
     const [packages, setPackages] = useState([]);
     const [selectedPackage, setSelectedPackage] = useState('');
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
     const [timeSlots, setTimeSlots] = useState([]);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
+    const datePickerRef = useRef(null);
+    const packageSelectRef = useRef(null);
 
     useEffect(() => {
         fetchPackages();
@@ -36,11 +40,10 @@ const Appointment = () => {
         }
     };
 
-    const handleDateChange = (e) => {
-        const date = e.target.value;
+    const handleDateChange = (date) => {
         setSelectedDate(date);
         if (date) {
-            fetchTimeSlots(date);
+            fetchTimeSlots(date.toISOString().split('T')[0]);
         }
     };
 
@@ -49,13 +52,12 @@ const Appointment = () => {
     };
 
     const handlePhoneNumberChange = (e) => {
-        let input = e.target.value.replace(/^\+880/, '');
+        let input = e.target.value.replace(/^\+880|-/g, '').replace(/\D/g, ''); // Remove non-numeric characters
         if (input.length === 11 && input.startsWith('0')) {
             input = input.slice(1);
         }
         setPhoneNumber(input.slice(0, 11));
     };
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,7 +66,7 @@ const Appointment = () => {
             await axiosInstance.post('/appointment', {
                 package_id: selectedPackage,
                 appoint_type: appointmentType,
-                appoint_date: selectedDate,
+                appoint_date: selectedDate.toISOString().split('T')[0],
                 user_fullname: fullName,
                 user_phonenum: '+880' + phoneNumber,
                 slot_id: selectedTimeSlot
@@ -73,7 +75,7 @@ const Appointment = () => {
             setFullName('');
             setPhoneNumber('');
             setSelectedPackage('');
-            setSelectedDate('');
+            setSelectedDate(null);
             setSelectedTimeSlot('');
             setTimeSlots([]);
         } catch (error) {
@@ -82,6 +84,14 @@ const Appointment = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const openDatePicker = () => {
+        datePickerRef.current.setOpen(true);
+    };
+
+    const openPackageSelect = () => {
+        packageSelectRef.current.focus();
     };
 
     return (
@@ -122,9 +132,9 @@ const Appointment = () => {
                     <label>Counselling Type</label>
                     <div className={styles.inputGroup}>
                         <select
-                            style={{ width: "98%" }}
                             value={selectedPackage}
                             onChange={(e) => setSelectedPackage(e.target.value)}
+                            ref={packageSelectRef}
                         >
                             <option value="">Select a package</option>
                             {packages.map(pkg => (
@@ -133,17 +143,22 @@ const Appointment = () => {
                                 </option>
                             ))}
                         </select>
+                        <FaCaretDown className={styles.icon} onClick={openPackageSelect} />
                     </div>
                 </div>
 
                 <div className={styles.formGroup}>
                     <label>Preferred Date</label>
                     <div className={styles.inputGroup}>
-                        <input
-                            type="date"
-                            value={selectedDate}
+                        <DatePicker
+                            selected={selectedDate}
                             onChange={handleDateChange}
+                            dateFormat="yyyy-MM-dd"
+                            className={styles.datePicker}
+                            placeholderText="Select a date"
+                            ref={datePickerRef}
                         />
+                        <FaCalendarAlt className={styles.icon} onClick={openDatePicker} />
                     </div>
                 </div>
 
@@ -151,7 +166,6 @@ const Appointment = () => {
                     <label>Preferred Time Slot</label>
                     <div className={styles.inputGroup}>
                         <select
-                            style={{ width: "98%" }}
                             value={selectedTimeSlot}
                             onChange={(e) => setSelectedTimeSlot(e.target.value)}
                         >

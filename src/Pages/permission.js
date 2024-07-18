@@ -58,36 +58,57 @@ const Permission = () => {
       });
       setMessage("Admin created successfully");
       fetchAdmins();
+      clearMessage();
     } catch (error) {
       setMessage("Failed to create admin");
+      clearMessage();
     }
   };
 
   const handleUpdate = async () => {
     const admin = selectedAdmin.id;
     setLoading(true);
-    const response = await axiosInstance.post("/updateAdminPermission", {
-      selectedPermissions,
-      admin,
-    });
-    fetchAdmins();
-    setLoading(false);
-    
-   
-    console.log("Selected Permissions:", selectedPermissions, admin,response);
+    try {
+      await axiosInstance.post("/updateAdminPermission", {
+        selectedPermissions,
+        admin,
+      });
+      setMessage("Permissions updated successfully");
+      fetchAdmins();
+      clearMessage();
+    } catch (error) {
+      setMessage("Failed to update permissions");
+      clearMessage();
+    } finally {
+      setLoading(false);
+    }
   };
+
   const handleDelete = async () => {
     if (window.confirm(`Do you really want to delete ${selectedAdmin.username} from admin?`)) {
       const admin = selectedAdmin.id;
       setLoading(true);
-      await axiosInstance.post("/deleteAdmin", {
-        admin,
-      });
-      fetchAdmins();
-      setLoading(false);
-      setSelectedAdmin(null);
-      setMessage("Admin deleted successfully");
+      try {
+        await axiosInstance.post("/deleteAdmin", {
+          admin,
+        });
+        fetchAdmins();
+        setSelectedAdmin(null);
+        setMessage("Admin deleted successfully");
+        clearMessage();
+      } catch (error) {
+        setMessage("Failed to delete admin");
+        clearMessage();
+      } finally {
+        setLoading(false);
+      }
     }
+  };
+
+  const clearMessage = () => {
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   return (
@@ -112,6 +133,7 @@ const Permission = () => {
               Create
             </button>
           </div>
+          
         </div>
         {selectedAdmin && (
           <div className="permissions">
@@ -142,6 +164,8 @@ const Permission = () => {
             </div>
           </div>
         )}
+              {message && <p className="notification-message">{message}</p>}
+
       </div>
       <div className="perm-right">
         <p>Users</p>
@@ -164,9 +188,9 @@ const Permission = () => {
             ))}
           </div>
         </div>
+
       </div>
 
-      {message && <p>{message}</p>}
     </div>
   );
 };

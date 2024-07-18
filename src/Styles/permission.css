@@ -4,34 +4,34 @@
     color: #fff;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 250px 50px #172B85;
+    box-shadow: 0px 4px 250px 50px #172b85;
     max-width: 900px;
     margin: 30px auto;
     border: 1px solid #555;
     text-align: left;
-}
-
-.permission-account {
+  }
+  
+  .permission-account {
     margin-bottom: 50px;
-}
-
-.permission-account label {
+  }
+  
+  .permission-account label {
     display: block;
     margin-bottom: 10px;
     font-size: 18px;
-}
-
-.permission-account input {
+  }
+  
+  .permission-account input {
     width: 387px;
     height: 25px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.create-button {
+  }
+  
+  .create-button {
     margin-left: 10px;
-    background: #D89C00;
+    background: #d89c00;
     color: #fff;
     border: none;
     width: 96px;
@@ -40,54 +40,55 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     align-items: center;
-}
-
-.create-button:hover {
+  }
+  
+  .create-button:hover {
     background-color: #8e850b;
-}
-
-.permissions-type-container {
+  }
+  
+  .permissions-type-container {
     padding: 10px;
     margin-right: 50px;
-}
-
-.permissions-type-container, .permissions-type-container p {
+  }
+  
+  .permissions-type-container,
+  .permissions-type-container p {
     margin-bottom: 20px;
     margin-top: 5px;
     color: #000000;
     font-weight: 700;
-    background: #D9D9D9;
-}
-
-.permissions-category {
+    background: #d9d9d9;
+  }
+  
+  .permissions-category {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-}
-
-.permissions-category p {
+  }
+  
+  .permissions-category p {
     font-weight: 400;
-    background: #FFFFFF;
+    background: #ffffff;
     color: #000000;
     padding: 3px 10px;
     border-radius: 15px;
     cursor: pointer;
     user-select: none;
     transition: background-color 0.3s ease;
-}
-
-.permissions-category p:hover {
+  }
+  
+  .permissions-category p:hover {
     background-color: #ffffff;
-}
-
-.permissions-category p.selected {
-    background: #1F72CD;
+  }
+  
+  .permissions-category p.selected {
+    background: #1f72cd;
     color: #000000;
-}
-
-.update-button {
+  }
+  
+  .update-button {
     font-weight: 700;
-    background: #FFBA08;
+    background: #ffba08;
     color: #000000;
     border: none;
     padding: 8px 30px;
@@ -95,75 +96,72 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    
-}
-
-.upd-btn-container {
+  }
+  
+  .upd-btn-container {
     margin-top: 40px;
     display: flex;
     justify-content: space-around;
     margin-right: 50px;
-}
-
-.update-button:hover {
+  }
+  
+  .update-button:hover {
     background-color: #c7bd4c;
-}
-
-.permission-rightdiv {
+  }
+  
+  .permission-rightdiv {
     text-align: left;
-    background: #D9D9D9;
+    background: #d9d9d9;
     width: 377px;
     height: 350px;
     border-radius: 15px;
-    padding: 10px; 
-}
-
-.perm-right {
+    padding: 10px;
+  }
+  
+  .perm-right {
     margin-top: 50px;
     text-align: center;
     font-weight: 700;
-}
-
-
-.permission-rightdiv .card-name {
+  }
+  
+  .permission-rightdiv .card-name {
     color: #f0f0f0;
     flex-grow: 1;
     text-align: start;
-}
-
-.permission-rightdiv .card-icon {
+  }
+  
+  .permission-rightdiv .card-icon {
     margin-left: 10px;
-}
-
-.permission-rightdiv {
+  }
+  
+  .permission-rightdiv {
     overflow-y: auto;
     max-height: calc(100vh - 200px);
-    scrollbar-width: thin; 
-    scrollbar-color: teal #f0f0f0; 
-}
-
-
-.permission-rightdiv::-webkit-scrollbar {
-    width: 5px; 
-}
-
-.permission-rightdiv::-webkit-scrollbar-track {
-    background: #f0f0f0; 
-}
-
-.permission-rightdiv::-webkit-scrollbar-thumb {
-    background-color: #bbc3e3; 
-    border-radius: 10px; 
-    border: 2px solid #f0f0f0; 
-}
-
-.admin-list {
+    scrollbar-width: thin;
+    scrollbar-color: teal #f0f0f0;
+  }
+  
+  .permission-rightdiv::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .permission-rightdiv::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+  
+  .permission-rightdiv::-webkit-scrollbar-thumb {
+    background-color: #bbc3e3;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
+  }
+  
+  .admin-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.p-card {
+  }
+  
+  .p-card {
     display: flex;
     background-color: #555;
     align-items: center;
@@ -172,17 +170,23 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
-}
-
-.p-card:hover {
+  }
+  
+  .p-card:hover {
     background-color: #2d2929;
-}
-
-
-.selected-admin.p-card {
+  }
+  
+  .selected-admin.p-card {
     background-color: rgb(180, 17, 17);
-    color: white; 
-}
-
+    color: white;
+  }
+  
+  .notification-message {
+    color: rgb(14, 161, 14);
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
