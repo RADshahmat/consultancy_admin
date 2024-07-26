@@ -18,6 +18,7 @@ const Appointment = () => {
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isBangladesh, setIsBangladesh] = useState(false); // New state to track if the selected country is Bangladesh
     const datePickerRef = useRef(null);
     const packageSelectRef = useRef(null);
 
@@ -55,8 +56,9 @@ const Appointment = () => {
         setAppointmentType(type);
     };
 
-    const handlePhoneNumberChange = (value) => {
+    const handlePhoneNumberChange = (value, country) => {
         setPhoneNumber(value);
+        setIsBangladesh(country.countryCode === 'bd'); // Check if the selected country is Bangladesh
     };
 
     const handleSubmit = async (e) => {
@@ -148,7 +150,7 @@ const Appointment = () => {
                             <option value="">Select a package</option>
                             {packages.map(pkg => (
                                 <option key={pkg._id} value={pkg._id}>
-                                    {pkg.name} - {pkg.price} Taka
+                                    {pkg.name} - {isBangladesh ? `${pkg.price_inTaka} Taka` : `$${pkg.price_inDollar}`}
                                 </option>
                             ))}
                         </select>
@@ -208,7 +210,7 @@ const Appointment = () => {
                         </button>
                     </div>
                 </div>
-                <br />
+        
                 <button type="submit" className={styles.paymentButton} disabled={loading}>
                     {loading ? "Confirming..." : "Confirm Now"} <FaArrowRight className={styles.arrowIcon} />
                 </button>

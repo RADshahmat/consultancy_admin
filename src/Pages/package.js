@@ -4,7 +4,8 @@ import axiosInstance from '../Auth/AxiosInstance';
 
 const Package = () => {
     const [name, setPackageName] = useState('');
-    const [price, setPrice] = useState('');
+    const [priceInTaka, setPriceInTaka] = useState('');
+    const [priceInDollar, setPriceInDollar] = useState('');
     const [packages, setPackages] = useState([]);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -27,12 +28,14 @@ const Package = () => {
         try {
             const response = await axiosInstance.post('/package', {
                 name,
-                price
+                price_inTaka: priceInTaka,
+                price_inDollar: priceInDollar
             });
             setMessage('Package added successfully');
             setPackages([...packages, response.data]);
             setPackageName('');
-            setPrice('');
+            setPriceInTaka('');
+            setPriceInDollar('');
             setLoading(false);
             setTimeout(() => {
                 setMessage('');
@@ -78,10 +81,17 @@ const Package = () => {
                 <br />
                 <input
                     type="text"
-                    placeholder="Price"
+                    placeholder="Price in Taka"
                     className="package-price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={priceInTaka}
+                    onChange={(e) => setPriceInTaka(e.target.value)}
+                /> &nbsp;
+                <input
+                    type="text"
+                    placeholder="Price in Dollar $"
+                    className="package-price"
+                    value={priceInDollar}
+                    onChange={(e) => setPriceInDollar(e.target.value)}
                 />
                 <div>
                     <button onClick={handleAddPackage} className="add-button">
@@ -95,7 +105,7 @@ const Package = () => {
             <div className="package-display">
                 {packages.map((pkg) => (
                     <div key={pkg._id} className="package-item">
-                        <span>{pkg.name} -- {pkg.price} Taka</span>
+                        <span>{pkg.name} -- {pkg.price_inTaka} Taka / ${pkg.price_inDollar}</span>
                         <button onClick={() => handleRemovePackage(pkg._id)} className="remove-button">Remove</button>
                     </div>
                 ))}
