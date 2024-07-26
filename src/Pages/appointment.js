@@ -96,7 +96,7 @@ const Appointment = () => {
     const openPackageSelect = () => {
         packageSelectRef.current.focus();
     };
-
+console.log('timeSlots: ',timeSlots)
     return (
         <div className={styles.login}>
             <br /><br />
