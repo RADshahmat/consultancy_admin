@@ -11,7 +11,9 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
 
     const fetchTimeSlots = async (date) => {
         try {
+           
             const response = await axiosInstance.get(`/timeslots?date=${date}`);
+            console.log('this is the date',response)
             setTimeSlots(response.data);
         } catch (error) {
             console.error('Error fetching time slots:', error);
@@ -34,7 +36,7 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
     const handleConfirm = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post(`/updateappointment?appoinment_id=${appointment.appointment_id}`, { date, timeSlot: selectedTimeSlot });
+            const response = await axiosInstance.post(`/updateappointment?appointment_id=${appointment.appointment_id}`, { date, timeSlot: selectedTimeSlot });
             if (response.status === 200) {
                 setSuccess(true);
                 onUpdate();
@@ -45,7 +47,7 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
             setLoading(false);
         }
     };
-    console.log('appoinment',appointment)
+    //console.log('appoinment',appointment)
 
     return (
         isOpen && (

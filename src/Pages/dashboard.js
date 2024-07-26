@@ -22,6 +22,7 @@ const Dashboard = () => {
  
     const fetchData = async () => {
         try {
+            console.log('dddddddddddddddd')
             const response = await axiosInstance.get("/timeslotsdashboard");
             setTimeSlots(response.data);
             calculateWeekDates(weekOffset);
@@ -33,20 +34,26 @@ const Dashboard = () => {
     };
 
     const fetchBlockedCells = async () => {
+        
         try {
+            console.log('hhhhhhhhhhhhhhhhhh')
             const response = await axiosInstance.get("/blockedCells");
-            console.log(response)
-            setBlockedCells(response);
+            console.log('this is blocked cells',response.data);
+            setBlockedCells(response.data);
         } catch (error) {
             console.error("Error fetching blocked cells:", error);
         }
     };
-
+    
+    useEffect(()=>{
+       fetchBlockedCells();
+        
+    },[])
     useEffect(() => {
         setIsPermited(localStorage.getItem('dashboardPermission'))
         setIsPermited1(localStorage.getItem('dashboardPermission1'))
         fetchData();
-        fetchBlockedCells();
+         
     }, [weekOffset]);
 
     const calculateWeekDates = (offsetWeeks = 0) => {
@@ -96,9 +103,9 @@ const Dashboard = () => {
                 if(isPermitted=='false'){
                     return;
                   }
-                console.log('jay',formatedDate);
+               
                 const res=await axiosInstance.post("/blockCells", { formatedDate, timeSlot });
-                console.log(res)
+                
                 fetchBlockedCells();
             } catch (error) {
                 console.error("Error blocking/unblocking cell:", error);
@@ -109,6 +116,7 @@ const Dashboard = () => {
     const fetchTodayAppointments = async () => {
         try {
             const response = await axiosInstance.get("/todayappointments");
+            
             setTodayAppointments(response.data);
         } catch (error) {
             console.error("Error fetching today appointments:", error);
@@ -118,7 +126,8 @@ const Dashboard = () => {
     const fetchMonthlyStats = async () => {
         try {
             const response = await axiosInstance.get("/monthlystats");
-            setMonthlyStats(response.data);
+            
+            setMonthlyStats(response.data[0]);
         } catch (error) {
             console.error("Error fetching monthly statistics:", error);
         }
@@ -149,7 +158,7 @@ const Dashboard = () => {
           return;
         }
         const formatedDate = formatDate(date);
-        console.log("Clicked Date:", formatedDate);
+        
         const response = await axiosInstance.post('/blockDay', { formatedDate });
         fetchBlockedCells();
     };
@@ -191,7 +200,7 @@ const Dashboard = () => {
         fetchData();
         //closeEditModal();
     };
- console.log(isPermitted)
+ 
     return (
         <div>
             <table className="schedule">
@@ -291,10 +300,10 @@ const Dashboard = () => {
                     </div>
                 )}
                 <div className="reserv-result">
-                    <p>Total Users: {monthlyStats.totalusers}</p>
-                    <p>Last Month Users: {monthlyStats.lastmonthusers}</p> <br />
-                    <p>This Month Reservations: {monthlyStats.thismonthreservations}</p>
-                    <p>Last Month Reservations: {monthlyStats.lastmonthreservations}</p>
+                    <p>Total Users: {monthlyStats.totalUsers}</p>
+                    <p>Last Month Users: {monthlyStats.lastMonthUsers}</p> <br />
+                    <p>This Month Reservations: {monthlyStats.thisMonthReservations}</p>
+                    <p>Last Month Reservations: {monthlyStats.lastMonthReservations}</p>
                 </div>
             </div>
             <EditReservationModal

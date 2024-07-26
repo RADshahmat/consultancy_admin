@@ -23,7 +23,7 @@ const Sidebar = ({ user }) => {
                         <span>Appointment</span>
                     </Link>
                 }
-                {user && user.promotion &&
+                {user && user.promotion=='1' &&
                     <Link to="/dashboard/promotion" className={`menu-item ${pathname === '/dashboard/promotion' ? 'active' : ''}`}>
                         <FaBullhorn className="menu-icon" />
                         <span>Promotion</span>
