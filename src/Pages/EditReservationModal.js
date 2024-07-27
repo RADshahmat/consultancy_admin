@@ -57,6 +57,12 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
     onClose();
     setSuccess(false);
   };
+  const handelClose1 = async () => {
+    onClose();
+    setDate("");
+    setSelectedTimeSlot("");
+    //setSuccess(false);
+  };
   const handleConfirm = async () => {
     setLoading(true);
     try {
@@ -116,7 +122,7 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
                     ))}
               </select>
               <div className={styles["modal-buttons"]}>
-                <button onClick={onClose}>Cancel</button>
+                <button onClick={handelClose1}>Cancel</button>
                 <button onClick={handleConfirm}>
                   {loading ? "Loading..." : "Confirm"}
                 </button>
