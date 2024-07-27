@@ -29,7 +29,7 @@ const Appointment = () => {
   const datePickerRef = useRef(null);
   const packageSelectRef = useRef(null);
   const [duration, setDuration] = useState(null);
-  const [isBangladesh, setIsBangladesh] = useState(false);
+  const [isBangladesh, setIsBangladesh] = useState('bd');
 
   useEffect(() => {
     fetchPackages();
