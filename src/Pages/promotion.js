@@ -219,7 +219,7 @@ const PromotionForm = () => {
       )}
 
       <div className="form-gr">
-        <label>Send SMS :</label>
+        <label>Send SMS :</label> &nbsp; &nbsp; &nbsp;
         <input
           type="text"
           value={formatNumbersForDisplay()}

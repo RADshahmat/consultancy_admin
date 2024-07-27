@@ -17,7 +17,7 @@ const Sidebar = ({ user }) => {
                         <span>Dashboard</span>
                     </Link>
                 }
-                {user && user.appointment &&
+                {user && user.appointment=='1' &&
                     <Link to="/dashboard/appointment" className={`menu-item ${pathname === '/dashboard/appointment' ? 'active' : ''}`}>
                         <FaCalendarCheck className="menu-icon" />
                         <span>Appointment</span>
@@ -29,19 +29,19 @@ const Sidebar = ({ user }) => {
                         <span>Promotion</span>
                     </Link>
                 }
-                {user && user.payment &&
+                {user && user.payment=='1' &&
                     <Link to="/dashboard/payment" className={`menu-item ${pathname === '/dashboard/payment' ? 'active' : ''}`}>
                         <FaMoneyBillWave className="menu-icon" />
                         <span>Payment</span>
                     </Link>
                 }
-                {user && user.permission &&
+                {user && user.permission=='1' &&
                     <Link to="/dashboard/permission" className={`menu-item ${pathname === '/dashboard/permission' ? 'active' : ''}`}>
                         <FaUserShield className="menu-icon" />
                         <span>Permissions</span>
                     </Link>
                 }
-                {user && user.package &&
+                {user && user.package=='1' &&
                     <Link to="/dashboard/package" className={`menu-item ${pathname === '/dashboard/package' ? 'active' : ''}`}>
                         <FaBox className="menu-icon" />
                         <span>Packages</span>

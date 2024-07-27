@@ -29,6 +29,7 @@ const Appointment = () => {
   const datePickerRef = useRef(null);
   const packageSelectRef = useRef(null);
   const [duration, setDuration] = useState(null);
+  const [isBangladesh, setIsBangladesh] = useState(false);
 
   useEffect(() => {
     fetchPackages();
@@ -71,49 +72,62 @@ const Appointment = () => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    if (date) {
-      const utcDate = moment(date).utc().format("YYYY-MM-DD");
-      fetchTimeSlots(utcDate);
-    }
-  };
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        if (date) {
+            const formattedDate = formatDate(date);
+            fetchTimeSlots(formattedDate);
+        }
+    };
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        let month = "" + (d.getMonth() + 1);
+        let day = "" + d.getDate();
+        const year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+
+        return [year, month, day].join("-");
+    };
 
   const handleTypeChange = (type) => {
     setAppointmentType(type);
   };
 
-  const handlePhoneNumberChange = (value) => {
-    setPhoneNumber(value);
-  };
+    const handlePhoneNumberChange = (value, country) => {
+        setPhoneNumber(value);
+        setIsBangladesh(country.countryCode === 'bd');
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const bdDate = moment(selectedDate).tz("Asia/Dhaka").format("YYYY-MM-DD");
-      await axiosInstance.post("/appointment", {
-        package_id: selectedPackage,
-        appoint_type: appointmentType,
-        appoint_date: bdDate,
-        user_fullname: fullName,
-        user_phonenum: "+" + phoneNumber,
-        slot_id: selectedTimeSlot,
-      });
-      alert("Appointment booked successfully");
-      setFullName("");
-      setPhoneNumber("");
-      setSelectedPackage("");
-      setSelectedDate(null);
-      setSelectedTimeSlot("");
-      setTimeSlots([]);
-    } catch (error) {
-      console.error("Error booking appointment:", error);
-      alert("Failed to book appointment");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const bdDate = formatDate(selectedDate); // Convert date to string in format YYYY-MM-DD
+            await axiosInstance.post('/appointment', {
+                package_id: selectedPackage,
+                appoint_type: appointmentType,
+                appoint_date: bdDate,
+                user_fullname: fullName,
+                user_phonenum: '+' + phoneNumber,
+                slot_id: selectedTimeSlot
+            });
+            alert('Appointment booked successfully');
+            setFullName('');
+            setPhoneNumber('');
+            setSelectedPackage('');
+            setSelectedDate(null);
+            setSelectedTimeSlot('');
+            setTimeSlots([]);
+        } catch (error) {
+            console.error('Error booking appointment:', error);
+            alert('Failed to book appointment');
+        } finally {
+            setLoading(false);
+        }
+    };
 
   const openDatePicker = () => {
     datePickerRef.current.setOpen(true);
@@ -184,7 +198,7 @@ const Appointment = () => {
               <option value="">Select a package</option>
               {packages.map((pkg) => (
                 <option key={pkg._id} value={pkg._id}>
-                  {pkg.name} - {pkg.price_inTaka} Taka
+                  {pkg.name} - {isBangladesh ? `${pkg.price_inTaka} Taka` : `$${pkg.price_inDollar}`}
                 </option>
               ))}
             </select>
