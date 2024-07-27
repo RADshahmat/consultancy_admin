@@ -22,8 +22,9 @@ const Dashboard = () => {
  
     const fetchData = async () => {
         try {
-            console.log('dddddddddddddddd')
+            
             const response = await axiosInstance.get("/timeslotsdashboard");
+            console.log('dddddddddddddddd',response.data)
             setTimeSlots(response.data);
             calculateWeekDates(weekOffset);
             fetchTodayAppointments();
@@ -116,7 +117,7 @@ const Dashboard = () => {
     const fetchTodayAppointments = async () => {
         try {
             const response = await axiosInstance.get("/todayappointments");
-            
+            console.log(response.data)
             setTodayAppointments(response.data);
         } catch (error) {
             console.error("Error fetching today appointments:", error);
