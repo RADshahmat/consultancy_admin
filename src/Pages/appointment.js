@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import styles from '../Styles/appointment.module.css';
-import axiosInstance from '../Auth/AxiosInstance';
-import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaCaretDown, FaPhone } from 'react-icons/fa';
-import moment from 'moment-timezone';
+import React, { useState, useEffect, useRef } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import styles from "../Styles/appointment.module.css";
+import axiosInstance from "../Auth/AxiosInstance";
+import { FaCalendarAlt, FaClock, FaUser, FaArrowRight, FaCaretDown, FaPhone } from "react-icons/fa";
 
 const Appointment = () => {
-    const [appointmentType, setAppointmentType] = useState('Online'); 
+    const [appointmentType, setAppointmentType] = useState('Online');
     const [packages, setPackages] = useState([]);
     const [selectedPackage, setSelectedPackage] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -18,7 +17,7 @@ const Appointment = () => {
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isBangladesh, setIsBangladesh] = useState(false); // New state to track if the selected country is Bangladesh
+    const [isBangladesh, setIsBangladesh] = useState(false);
     const datePickerRef = useRef(null);
     const packageSelectRef = useRef(null);
 
@@ -47,9 +46,21 @@ const Appointment = () => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         if (date) {
-            const utcDate = moment(date).utc().format('YYYY-MM-DD');
-            fetchTimeSlots(utcDate);
+            const formattedDate = formatDate(date);
+            fetchTimeSlots(formattedDate);
         }
+    };
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        let month = "" + (d.getMonth() + 1);
+        let day = "" + d.getDate();
+        const year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+
+        return [year, month, day].join("-");
     };
 
     const handleTypeChange = (type) => {
@@ -58,14 +69,14 @@ const Appointment = () => {
 
     const handlePhoneNumberChange = (value, country) => {
         setPhoneNumber(value);
-        setIsBangladesh(country.countryCode === 'bd'); // Check if the selected country is Bangladesh
+        setIsBangladesh(country.countryCode === 'bd');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const bdDate = moment(selectedDate).tz('Asia/Dhaka').format('YYYY-MM-DD');
+            const bdDate = formatDate(selectedDate); // Convert date to string in format YYYY-MM-DD
             await axiosInstance.post('/appointment', {
                 package_id: selectedPackage,
                 appoint_type: appointmentType,
@@ -96,7 +107,7 @@ const Appointment = () => {
     const openPackageSelect = () => {
         packageSelectRef.current.focus();
     };
-console.log('timeSlots: ',timeSlots)
+
     return (
         <div className={styles.login}>
             <br /><br />
@@ -210,7 +221,7 @@ console.log('timeSlots: ',timeSlots)
                         </button>
                     </div>
                 </div>
-        
+
                 <button type="submit" className={styles.paymentButton} disabled={loading}>
                     {loading ? "Confirming..." : "Confirm Now"} <FaArrowRight className={styles.arrowIcon} />
                 </button>
