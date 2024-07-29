@@ -105,7 +105,7 @@ const Appointment = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const bdDate = formatDate(selectedDate); // Convert date to string in format YYYY-MM-DD
+            const bdDate = formatDate(selectedDate); 
             await axiosInstance.post('/appointment', {
                 package_id: selectedPackage,
                 appoint_type: appointmentType,
@@ -269,7 +269,6 @@ const Appointment = () => {
             </button>
           </div>
         </div>
-        <br />
         <button
           type="submit"
           className={styles.paymentButton}
