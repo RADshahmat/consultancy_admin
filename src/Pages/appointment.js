@@ -13,7 +13,7 @@ import {
   FaCaretDown,
   FaPhone,
 } from "react-icons/fa";
-import moment from "moment-timezone";
+
 
 const Appointment = () => {
   const [appointmentType, setAppointmentType] = useState("Online");
@@ -100,35 +100,44 @@ const Appointment = () => {
         setPhoneNumber(value);
         setIsBangladesh(country.countryCode === 'bd');
     };
-
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            const bdDate = formatDate(selectedDate); 
-            await axiosInstance.post('/appointment', {
-                package_id: selectedPackage,
-                appoint_type: appointmentType,
-                appoint_date: bdDate,
-                user_fullname: fullName,
-                user_phonenum: '+' + phoneNumber,
-                slot_id: selectedTimeSlot
-            });
-            alert('Appointment booked successfully');
-            setFullName('');
-            setPhoneNumber('');
-            setSelectedPackage('');
-            setSelectedDate(null);
-            setSelectedTimeSlot('');
-            setTimeSlots([]);
-        } catch (error) {
-            console.error('Error booking appointment:', error);
-            alert('Failed to book appointment');
-        } finally {
-            setLoading(false);
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const bdDate = formatDate(selectedDate);
+    
+        // Check if the selectedTimeSlot is a combined slot for couple counseling
+        let slotsToSend = [];
+        if (duration !== "1.0" && selectedTimeSlot.length === 2) {
+          slotsToSend = [selectedTimeSlot.charAt(0), selectedTimeSlot.charAt(1)];
+        } else {
+          slotsToSend = [selectedTimeSlot];
         }
+    
+        await axiosInstance.post('/appointment', {
+          package_id: selectedPackage,
+          appoint_type: appointmentType,
+          appoint_date: bdDate,
+          user_fullname: fullName,
+          user_phonenum: '+' + phoneNumber,
+          slot_ids: slotsToSend, // Send the array of slot IDs
+        });
+    
+        alert('Appointment booked successfully');
+        setFullName('');
+        setPhoneNumber('');
+        setSelectedPackage('');
+        setSelectedDate(null);
+        setSelectedTimeSlot('');
+        setTimeSlots([]);
+      } catch (error) {
+        console.error('Error booking appointment:', error);
+        alert('Failed to book appointment');
+      } finally {
+        setLoading(false);
+      }
     };
-
+    
   const openDatePicker = () => {
     datePickerRef.current.setOpen(true);
   };

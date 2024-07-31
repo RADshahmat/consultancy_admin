@@ -11,7 +11,7 @@ const Dashboard = () => {
     const [weekOffset, setWeekOffset] = useState(0);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [selectedCell, setSelectedCell] = useState(null);
-    const [todayAppointments, setTodayAppointments] = useState([]);
+    const [todayAppointments, setTodayAppointments] = useState(0);
     const [monthlyStats, setMonthlyStats] = useState({});
     const [blockedCells, setBlockedCells] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,13 +117,13 @@ const Dashboard = () => {
     const fetchTodayAppointments = async () => {
         try {
             const response = await axiosInstance.get("/todayappointments");
-            console.log(response.data)
-            setTodayAppointments(response.data);
+            console.log("Today Appointments Response:", response.data);
+            setTodayAppointments(response.data.totalAppointments);
         } catch (error) {
-            console.error("Error fetching today appointments:", error);
+            console.error("Error fetching today's appointments:", error);
         }
     };
-
+    
     const fetchMonthlyStats = async () => {
         try {
             const response = await axiosInstance.get("/monthlystats");
@@ -268,7 +268,7 @@ const Dashboard = () => {
                     <FaArrowAltCircleRight className="nav2-btn-icon" />
                 </button>
             </div>
-            <h3>You Have {todayAppointments.length} Reservations Today</h3>
+            <h3>You Have {todayAppointments} Reservations Today</h3>
             <div className="reservation-details">
                 {selectedAppointment && (
                     <div className="reservation-card">
