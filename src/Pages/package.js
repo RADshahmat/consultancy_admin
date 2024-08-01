@@ -6,6 +6,7 @@ const Package = () => {
     const [name, setPackageName] = useState('');
     const [priceInTaka, setPriceInTaka] = useState('');
     const [priceInDollar, setPriceInDollar] = useState('');
+    const [duration, setDuration] = useState(''); // New state for duration
     const [packages, setPackages] = useState([]);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -29,13 +30,15 @@ const Package = () => {
             const response = await axiosInstance.post('/package', {
                 name,
                 price_inTaka: priceInTaka,
-                price_inDollar: priceInDollar
+                price_inDollar: priceInDollar,
+                duration // Include duration in the request
             });
             setMessage('Package added successfully');
             setPackages([...packages, response.data]);
             setPackageName('');
             setPriceInTaka('');
             setPriceInDollar('');
+            setDuration(''); // Clear duration
             setLoading(false);
             setTimeout(() => {
                 setMessage('');
@@ -46,10 +49,10 @@ const Package = () => {
             console.error('Error adding package:', error);
             setTimeout(() => {
                 setMessage('');
-            }, 1000); 
+            }, 1000);
         }
     };
-
+    
     const handleRemovePackage = async (id) => {
         try {
             await axiosInstance.delete(`/package/${id}`);
@@ -57,7 +60,7 @@ const Package = () => {
             setMessage('Package removed successfully');
             setTimeout(() => {
                 setMessage('');
-            }, 1000); 
+            }, 1000);
         } catch (error) {
             setMessage('Failed to remove package');
             console.error('Error removing package:', error);
@@ -93,6 +96,16 @@ const Package = () => {
                     value={priceInDollar}
                     onChange={(e) => setPriceInDollar(e.target.value)}
                 />
+                <br />
+                <select
+                    className="package-name"
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                >
+                    <option value="">Select Duration</option>
+                    <option value="1.0">1.0 hour</option>
+                    <option value="1.5">1.5 hour</option>
+                </select>
                 <div>
                     <button onClick={handleAddPackage} className="add-button">
                         {loading ? "Adding..." : "Add"}
@@ -105,7 +118,7 @@ const Package = () => {
             <div className="package-display">
                 {packages.map((pkg) => (
                     <div key={pkg._id} className="package-item">
-                        <span>{pkg.name} -- {pkg.price_inTaka} Taka / ${pkg.price_inDollar}</span>
+                        <span>{pkg.name} -- {pkg.price_inTaka} Taka / ${pkg.price_inDollar} ({pkg.duration} Hour)</span>
                         <button onClick={() => handleRemovePackage(pkg._id)} className="remove-button">Remove</button>
                     </div>
                 ))}
