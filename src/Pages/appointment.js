@@ -142,12 +142,12 @@ const Appointment = () => {
     const selectedPackage = packages.find(
       (pkg) => pkg._id === parseInt(selectedPackageId)
     );
-    console.log("hahaha: ", selectedPackage);
+   
     if (selectedPackage) {
       setDuration(selectedPackage.duration);
     }
   };
-  console.log("timeSlots: ", timeSlots);
+  
   return (
     <div className={styles.login}>
       <br />
@@ -171,22 +171,30 @@ const Appointment = () => {
         <div className={styles.formGroup}>
           <label>Your Phone Number</label>
           <div className={styles.inputGroup}>
-            <PhoneInput
-              country={"bd"}
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              enableSearch={true}
-              countryCodeEditable={false}
-              inputProps={{
-                name: "phone",
-                required: true,
-                autoFocus: true,
-                className: styles.phoneInput,
-              }}
-              containerClass={styles.customPhoneInput}
-              buttonClass={styles.customPhoneInput}
-              inputStyle={{ paddingLeft: "48px" }}
-            />
+           
+             <PhoneInput
+                country={"bd"}
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                enableSearch={true}
+                countryCodeEditable={false}
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                  autoFocus: true,
+                  className: styles.phoneInput,
+                }}
+                inputStyle={{
+                  width:'100%',
+                  height: '27px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                  paddingLeft: '48px',
+                }}
+                buttonStyle={{ borderRadius: '4px 0 0 4px', border: '1px solid #ccc' }}
+                dropdownStyle={{ borderRadius: '0 0 4px 4px',background:'#343434',textAlign:'left',color:'#666666',overflowX:'hidden',width:'300px' }}
+                searchStyle={{background:'#343434',width:'80%'}}
+              />
             <FaPhone className={styles.icon} />
           </div>
         </div>

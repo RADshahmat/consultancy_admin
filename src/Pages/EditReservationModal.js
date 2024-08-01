@@ -14,7 +14,7 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
   const fetchTimeSlots = async (date) => {
     try {
       const response = await axiosInstance.get(`/timeslots?date=${date}`);
-      console.log("this is the date", response);
+      //console.log("this is the date", response);
       setTimeSlots(response.data);
       const timeSlotsData = response.data;
       const data = [];
@@ -68,10 +68,12 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
     try {
       const response = await axiosInstance.post(
         `/updateappointment?appointment_id=${appointment.appointment_id}`,
-        { date, timeSlot: selectedTimeSlot }
+        { date, time_Slot: selectedTimeSlot }
       );
       if (response.status === 200) {
         setSuccess(true);
+        setDate("");
+        setSelectedTimeSlot("");
         onUpdate();
       }
     } catch (error) {
@@ -82,7 +84,6 @@ const EditReservationModal = ({ isOpen, onClose, appointment, onUpdate }) => {
   };
 
   //console.log('appoinment',appointment)
-  console.log("hahaha: ", appointment);
   return (
     isOpen && (
       <div className={styles["modal-overlay"]}>

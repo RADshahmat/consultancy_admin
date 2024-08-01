@@ -37,7 +37,7 @@ const PromotionForm = () => {
     const fetchAppointments = async () => {
       try {
         const result = await axiosInstance.get("getAllAppoinment");
-        console.log("Result: ", result);
+        //console.log("Result: ", result);
         setAppointments(result.data);
       } catch (error) {
         console.error("Error fetching appointments:", error);
@@ -76,7 +76,7 @@ const PromotionForm = () => {
         fromDate: currentFromDate,
         toDate: currentToDate,
       });
-      console.log("Result: ", result);
+      //("Result: ", result);
       const newAppointments = result.data;
 
       const uniqueNumbers = Array.from(
@@ -105,7 +105,7 @@ const PromotionForm = () => {
         sms: allNumbers,
         message,
       });
-      console.log(result.data.result);
+      //console.log(result.data.result);
       const successCount = result.data.result.filter(
         (response) => response.status === "SUCCESS"
       ).length;
