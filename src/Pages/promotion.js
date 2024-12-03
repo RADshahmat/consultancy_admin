@@ -4,6 +4,7 @@ import "../Styles/promotionform.css";
 import axiosInstance from "../Auth/AxiosInstance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DNA } from "react-loader-spinner";
+import Notes from "./notes";
 
 const PromotionForm = () => {
   const [sms, setSms] = useState([]);
@@ -132,19 +133,24 @@ const PromotionForm = () => {
     (e) => {
       const value = e.target.value;
       setSendBy(value);
+      console.log(value,appointments);
       if (value) {
-        const filtered = appointments.filter(
-          (appointment) =>
-            appointment.user_fullname
-              .toLowerCase()
-              .includes(value.toLowerCase()) ||
-            appointment.user_phonenum.includes(value)
-        );
+        const filtered = appointments.filter((appointment) => {
+          const fullname = appointment.user_fullname || ""; // Fallback to an empty string
+          const phonenum = appointment.user_phonenum || ""; // Fallback to an empty string
+      
+          return (
+            fullname.toLowerCase().includes(value.toLowerCase()) ||
+            phonenum.includes(value)
+          );
+        });
+      
         setFilteredAppointments(filtered);
         setShowAppointments(true);
       } else {
         setShowAppointments(false);
       }
+      
     },
     [appointments]
   );
@@ -288,6 +294,7 @@ const PromotionForm = () => {
           Send <img src={`${process.env.PUBLIC_URL}/send.png`} alt="Send" />
         </button>
       </div>
+      <Notes/>
     </div>
   );
 };

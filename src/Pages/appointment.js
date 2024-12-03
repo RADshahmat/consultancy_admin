@@ -107,12 +107,14 @@ const Appointment = () => {
         const bdDate = formatDate(selectedDate);
     
         // Check if the selectedTimeSlot is a combined slot for couple counseling
-        let slotsToSend = [];
+        let slotsToSend ='';
         if (duration !== "1.0" && selectedTimeSlot.length === 2) {
-          slotsToSend = [selectedTimeSlot.charAt(0), selectedTimeSlot.charAt(1)];
+          slotsToSend = selectedTimeSlot;
         } else {
-          slotsToSend = [selectedTimeSlot];
+          slotsToSend = selectedTimeSlot;
         }
+        console.log(slotsToSend)
+        //return;
     
         await axiosInstance.post('/appointment', {
           package_id: selectedPackage,
@@ -120,7 +122,7 @@ const Appointment = () => {
           appoint_date: bdDate,
           user_fullname: fullName,
           user_phonenum: '+' + phoneNumber,
-          slot_ids: slotsToSend, // Send the array of slot IDs
+          slot_id: slotsToSend, // Send the array of slot IDs
         });
     
         alert('Appointment booked successfully');
@@ -156,7 +158,7 @@ const Appointment = () => {
       setDuration(selectedPackage.duration);
     }
   };
-  
+  console.log(selectedTimeSlot,'     ',duration);
   return (
     <div className={styles.login}>
       <br />
