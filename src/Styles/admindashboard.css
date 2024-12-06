@@ -169,3 +169,48 @@ body {
 }
 
 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+  }
+  
+  .modal-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .quill {
+    min-height: 300px; /* Ensure a taller editor */
+    background-color: #ffffff; /* Word-like white background */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded edges */
+    font-family: 'Calibri', sans-serif; /* Calibri for Word-like feel */
+    padding: 15px; /* Add padding */
+  }
+  
+  .ql-toolbar {
+    border: 1px solid #ddd; /* Match editor border */
+    border-bottom: none; /* Blend with editor */
+  }
+  
+  .ql-container {
+    font-size: 16px; /* Default readable size */
+    line-height: 1.5; /* Word processor-like line spacing */
+  }
+  

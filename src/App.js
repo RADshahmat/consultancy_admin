@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
 import DashboardApis from './Services/admindashboardApis';
 import LoginPage from './Services/login';
 import useAuth from './Auth/Auth';
@@ -48,6 +49,7 @@ const DashboardRedirect = ({ children }) => {
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Router>
         <ScrollToTop />
         <Routes>

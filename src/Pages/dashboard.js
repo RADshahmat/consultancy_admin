@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; 
+import Modal from 'react-modal';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the styles
 import axiosInstance from "../Auth/AxiosInstance";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import EditReservationModal from "./EditReservationModal"; // Import the modal component
@@ -17,6 +22,65 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPermitted, setIsPermited] = useState(false);
   const [isPermitted1, setIsPermited1] = useState(false);
+
+  const [suggestionText, setSuggestionText] = useState('');
+  const [isEditorVisible, setIsEditorVisible] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+
+  const handleSuggestionClick = (phoneNumber) => {
+    // Open the editor when the paper icon is clicked
+    setIsEditorVisible(true);
+    // Optionally, fetch the existing suggestion based on the phone number
+    fetchSuggestion(phoneNumber);
+  };
+
+  // Fetch the existing suggestion based on phone number (or appointment ID)
+  const fetchSuggestion = async (phoneNumber) => {
+    try {
+      const response = await axiosInstance.get(`/suggestions/${phoneNumber}`);
+      setSuggestionText(response.data.suggestion || ''); // Set the existing suggestion or empty
+    } catch (error) {
+      console.error('Error fetching suggestion:', error);
+    }
+  };
+
+  // Function to handle text changes in the rich text editor
+  const handleEditorChange = (value) => {
+    setSuggestionText(value);
+  };
+
+  // Function to save the suggestion to the backend
+  const saveSuggestion = async () => {
+    setIsSaving(true);
+    try {
+      await axiosInstance.post('/suggestions', {
+        suggestion: suggestionText,
+        phone: selectedAppointment.user_phonenum,
+      });
+  
+      // Show success toast notification
+      toast.success('Suggestion saved successfully!', {
+        position: "top-right", // Use string instead of toast.POSITION.TOP_RIGHT
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error('Error saving suggestion:', error);
+  
+      // Show error toast notification
+      toast.error('Failed to save suggestion.', {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+  
+  const closeEditor = () => {
+    setIsEditorVisible(false); // Close the editor modal
+  };
+
 
   const fetchData = async () => {
     try {
@@ -102,7 +166,7 @@ const Dashboard = () => {
     const formatedDate = formatDate(date);
     if (!appointment) {
       try {
-        if (isPermitted == "false") {
+        if (isPermitted === "false") {
           return;
         }
 
@@ -139,7 +203,7 @@ const Dashboard = () => {
   };
 
   const cancelReservation = async (appointmentId) => {
-    if (isPermitted == "false") {
+    if (isPermitted === "false") {
       return;
     }
     const confirmed = window.confirm(
@@ -163,7 +227,7 @@ const Dashboard = () => {
   };
 
   const handleHeaderClick = async (date) => {
-    if (isPermitted == "false") {
+    if (isPermitted === "false") {
       return;
     }
     const formatedDate = formatDate(date);
@@ -193,14 +257,14 @@ const Dashboard = () => {
   };
 
   const openEditModal = () => {
-    if (isPermitted == "false") {
+    if (isPermitted === "false") {
       return;
     }
     setIsModalOpen(true);
   };
 
   const closeEditModal = () => {
-    if (isPermitted == "false") {
+    if (isPermitted === "false") {
       return;
     }
     setIsModalOpen(false);
@@ -288,7 +352,7 @@ const Dashboard = () => {
                       <div
                         className="cell-content"
                         style={
-                          appointment.duration == "1.5"
+                          appointment.duration === "1.5"
                             ? { background: "#93C572" }
                             : { background: "#FFAA33" }
                         }
@@ -359,7 +423,9 @@ const Dashboard = () => {
               >
                 Edit Reservation
               </button>
-              {isPermitted1 == "true" ? (
+              <img src={`${process.env.PUBLIC_URL}/paper.png`} alt="Edit Suggestion"  onClick={() => handleSuggestionClick(selectedAppointment?.user_phonenum)} style={{ cursor: 'pointer' }} />
+
+              {isPermitted1 === "true" ? (
                 <Link
                   to={`/dashboard/promotion?phone=${
                     selectedAppointment.user_phonenum
@@ -391,6 +457,104 @@ const Dashboard = () => {
         appointment={selectedAppointment}
         onUpdate={handleUpdate}
       />
+     <Modal
+      isOpen={isEditorVisible}
+      onRequestClose={closeEditor}
+      contentLabel="Suggestion Editor"
+      className="modal-content" // CSS class for content
+      overlayClassName="modal-overlay" // CSS class for overlay
+    >
+      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Appointment Note</h2>
+
+      {/* Scrollable Modal Body */}
+      <div style={{ maxHeight: '70vh', overflowY: 'scroll', padding: '10px' }}>
+        <ReactQuill
+          value={suggestionText}
+          onChange={handleEditorChange}
+          placeholder="Type your suggestion here..."
+          modules={{
+            toolbar: [
+              // Styling options
+              [{ font: [] }, { size: [] }],
+
+              // Headings
+              [{ header: '1' }, { header: '2' }, { header: [3, 4, 5, 6] }, { header: false }],
+
+              // Text styling
+              ['bold', 'italic', 'underline', 'strike'], // Basic formatting
+              [{ color: [] }, { background: [] }], // Text color and background color
+
+              // Alignment
+              [{ align: [] }],
+
+              // Lists and Indentations
+              [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+
+              // Links and Images
+              ['link', 'image', 'video'],
+
+              // Code and clean
+              ['code-block', 'blockquote'],
+              ['clean'], // Remove formatting
+            ],
+          }}
+          formats={[
+            'header',
+            'font',
+            'size',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'color',
+            'background',
+            'align',
+            'list',
+            'bullet',
+            'indent',
+            'link',
+            'image',
+            'video',
+            'code-block',
+            'blockquote',
+          ]}
+        />
+      </div>
+
+  {/* Buttons Section */}
+  <div style={{ marginTop: '20px', textAlign: 'center' }}>
+    <button
+      onClick={saveSuggestion}
+      disabled={isSaving}
+      style={{
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: isSaving ? 'not-allowed' : 'pointer',
+        marginRight: '10px',
+      }}
+    >
+      {isSaving ? "Saving..." : "Save"}
+    </button>
+    <button
+      onClick={closeEditor}
+      style={{
+        backgroundColor: '#f44336',
+        color: 'white',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+      }}
+    >
+      Close
+    </button>
+  </div>
+</Modal>
+
+
     </div>
   );
 };
