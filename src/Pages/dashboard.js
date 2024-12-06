@@ -380,7 +380,12 @@ const Dashboard = () => {
           <FaArrowAltCircleRight className="nav2-btn-icon" />
         </button>
       </div>
-      <h3>You Have {todayAppointments.length} Reservations Today</h3>
+      <h3>
+        {todayAppointments && todayAppointments.length > 0 
+          ? `You Have ${todayAppointments.length} Reservations Today` 
+          : 'You Have No Reservation Today'}
+        </h3>
+
       <div className="reservation-details">
         {selectedAppointment && (
           <div className="reservation-card">

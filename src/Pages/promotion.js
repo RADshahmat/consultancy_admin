@@ -291,7 +291,7 @@ const PromotionForm = () => {
           <span>{calculateMessages(message)}</span>
         </div>
         <button onClick={handleSend} className="send-button">
-          Send <img src={`${process.env.PUBLIC_URL}/send.png`} alt="Send" />
+          Send <img src="/send.png" alt="Send" />
         </button>
       </div>
       <Notes/>
