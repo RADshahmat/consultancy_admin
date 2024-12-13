@@ -169,3 +169,55 @@ body {
 }
 
 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+  }
+  
+  .modal-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .quill {
+    min-height: 300px; /* Ensure a taller editor */
+    background-color: #ffffff; /* Word-like white background */
+    border-radius: 4px; /* Rounded edges */
+    font-family: 'Calibri', sans-serif; /* Calibri for Word-like feel */
+    padding: 15px; /* Add padding */
+  }
+  
+ .ql-toolbar {
+    position: absolute;
+    top: 0;
+    z-index: 1000; 
+    width: 89.3%;
+    background: #fff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .quill-editor .ql-container {
+    margin-top: 60px; 
+  }
+  .ql-container{
+    margin-top: 1.5rem;
+  }
+  
+  
+  
