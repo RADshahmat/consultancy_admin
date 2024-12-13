@@ -11,9 +11,9 @@ import EditReservationModal from "./EditReservationModal"; // Import the modal c
 import "../Styles/admindashboard.css";
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { ImageResize } from 'quill-image-resize-module';
+//import { ImageResize } from 'quill-image-resize-module';
  
-Quill.register('modules/imageResize', ImageResize);
+//Quill.register('modules/imageResize', ImageResize);
 
 const Dashboard = () => {
   const [timeSlots, setTimeSlots] = useState([]);
@@ -506,10 +506,7 @@ const Dashboard = () => {
               ['code-block', 'blockquote'],
               ['clean'], // Remove formatting
             ],
-            imageResize: {
-              parchment: Quill.import('parchment')
-              // See optional "config" below
-          }
+            
           }}
           formats={[
             'header',
