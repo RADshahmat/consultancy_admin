@@ -5,6 +5,7 @@ import axiosInstance from "../Auth/AxiosInstance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DNA } from "react-loader-spinner";
 import Notes from "./notes";
+import { VscSend } from "react-icons/vsc";
 
 const PromotionForm = () => {
   const [sms, setSms] = useState([]);
@@ -291,7 +292,7 @@ const PromotionForm = () => {
           <span>{calculateMessages(message)}</span>
         </div>
         <button onClick={handleSend} className="send-button">
-          Send <img src={`${process.env.PUBLIC_URL}/send.png`} alt="Send" />
+          Send <VscSend color="white"/>
         </button>
       </div>
       <Notes/>

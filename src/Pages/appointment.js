@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "../Styles/appointment.module.css";
 import axiosInstance from "../Auth/AxiosInstance";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   FaCalendarAlt,
   FaClock,
@@ -122,19 +124,19 @@ const Appointment = () => {
           appoint_date: bdDate,
           user_fullname: fullName,
           user_phonenum: '+' + phoneNumber,
-          slot_id: slotsToSend, // Send the array of slot IDs
+          slot_id: slotsToSend, 
         });
     
-        alert('Appointment booked successfully');
+        toast.success('Appointment booked successfully');
         setFullName('');
         setPhoneNumber('');
-        setSelectedPackage('');
+        //setSelectedPackage('');
         setSelectedDate(null);
         setSelectedTimeSlot('');
         setTimeSlots([]);
       } catch (error) {
         console.error('Error booking appointment:', error);
-        alert('Failed to book appointment');
+        toast.error('Failed to book appointment');
       } finally {
         setLoading(false);
       }
@@ -297,6 +299,7 @@ const Appointment = () => {
           <FaArrowRight className={styles.arrowIcon} />
         </button>
       </form>
+      <ToastContainer/>
     </div>
   );
 };
